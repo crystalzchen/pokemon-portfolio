@@ -36,9 +36,9 @@ body {
   overflow: hidden;
 }
 
-/* ============================= */
-/* TRAINER */
-/* ============================= */
+/* =========================
+   TRAINER
+========================= */
 
 .trainer {
   position: absolute;
@@ -49,19 +49,16 @@ body {
   width: 150px;
   height: auto;
 
-  transform: translate(
-    -50%,
-    -50%
-  );
+  transform: translate(-50%, -50%);
 
   image-rendering: pixelated;
 
   z-index: 5;
 }
 
-/* ============================= */
-/* POKEMON */
-/* ============================= */
+/* =========================
+   POKEMON
+========================= */
 
 .pokemon {
   position: absolute;
@@ -81,7 +78,7 @@ body {
     infinite;
 }
 
-/* ENTER FROM RIGHT */
+/* ENTER RIGHT */
 
 .pokemon-entering-right {
   animation:
@@ -89,23 +86,6 @@ body {
       1.2s
       steps(8)
       forwards,
-
-    pokemonIdle
-      1.2s
-      steps(2)
-      1.2s
-      infinite;
-}
-
-/* ENTER FROM LEFT */
-
-.pokemon-entering-left {
-  animation:
-    pokemonEnterLeft
-      1.2s
-      steps(8)
-      forwards,
-
     pokemonIdle
       1.2s
       steps(2)
@@ -115,44 +95,103 @@ body {
 
 @keyframes pokemonEnterRight {
   from {
-    transform:
-      translateX(500px);
+    transform: translateX(500px);
   }
 
   to {
-    transform:
-      translateX(0);
+    transform: translateX(0);
   }
+}
+
+/* ENTER LEFT */
+
+.pokemon-entering-left {
+  animation:
+    pokemonEnterLeft
+      1.2s
+      steps(8)
+      forwards,
+    pokemonIdle
+      1.2s
+      steps(2)
+      1.2s
+      infinite;
 }
 
 @keyframes pokemonEnterLeft {
   from {
-    transform:
-      translateX(-500px);
+    transform: translateX(-500px);
   }
 
   to {
-    transform:
-      translateX(0);
+    transform: translateX(0);
   }
 }
 
-/* IDLE BOUNCE */
+/* ENTER TOP */
+
+.pokemon-entering-top {
+  animation:
+    pokemonEnterTop
+      1.2s
+      steps(8)
+      forwards,
+    pokemonIdle
+      1.2s
+      steps(2)
+      1.2s
+      infinite;
+}
+
+@keyframes pokemonEnterTop {
+  from {
+    transform: translateY(-500px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ENTER BOTTOM */
+
+.pokemon-entering-bottom {
+  animation:
+    pokemonEnterBottom
+      1.2s
+      steps(8)
+      forwards,
+    pokemonIdle
+      1.2s
+      steps(2)
+      1.2s
+      infinite;
+}
+
+@keyframes pokemonEnterBottom {
+  from {
+    transform: translateY(500px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* IDLE */
 
 @keyframes pokemonIdle {
   0%,
   100% {
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 
   50% {
-    transform:
-      translateY(-5px);
+    transform: translateY(-5px);
   }
 }
 
-/* SELECTED POKEMON */
+/* SELECTED */
 
 .pokemon-selected {
   cursor: pointer;
@@ -161,12 +200,7 @@ body {
     brightness(1.1)
     drop-shadow(
       0 0 8px
-      rgba(
-        255,
-        255,
-        255,
-        0.8
-      )
+      rgba(255, 255, 255, 0.8)
     );
 }
 
@@ -190,8 +224,7 @@ body {
 
     opacity: 1;
 
-    filter:
-      brightness(1);
+    filter: brightness(1);
   }
 
   25% {
@@ -203,9 +236,7 @@ body {
 
     filter:
       brightness(2)
-      drop-shadow(
-        0 0 8px white
-      );
+      drop-shadow(0 0 8px white);
   }
 
   50% {
@@ -217,9 +248,7 @@ body {
 
     filter:
       brightness(3)
-      drop-shadow(
-        0 0 14px white
-      );
+      drop-shadow(0 0 14px white);
   }
 
   75% {
@@ -231,9 +260,7 @@ body {
 
     filter:
       brightness(4)
-      drop-shadow(
-        0 0 18px white
-      );
+      drop-shadow(0 0 18px white);
   }
 
   100% {
@@ -245,15 +272,13 @@ body {
 
     filter:
       brightness(5)
-      drop-shadow(
-        0 0 22px white
-      );
+      drop-shadow(0 0 22px white);
   }
 }
 
-/* ============================= */
-/* POKEBALL */
-/* ============================= */
+/* =========================
+   POKEBALL
+========================= */
 
 .pokeball {
   position: absolute;
@@ -264,8 +289,7 @@ body {
   width: 225px;
   height: auto;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   image-rendering: pixelated;
 
@@ -273,8 +297,7 @@ body {
 
   opacity: 0.65;
 
-  filter:
-    grayscale(25%);
+  filter: grayscale(25%);
 
   transition:
     opacity 0.2s,
@@ -290,12 +313,7 @@ body {
     brightness(1.15)
     drop-shadow(
       0 0 10px
-      rgba(
-        255,
-        255,
-        255,
-        0.9
-      )
+      rgba(255, 255, 255, 0.9)
     );
 
   cursor: pointer;
@@ -321,8 +339,6 @@ body {
       translateY(-8px);
   }
 }
-
-/* THROW */
 
 .pokeball-throwing {
   opacity: 1;
@@ -350,12 +366,8 @@ body {
     transform:
       translateX(-50%)
       translate(
-        calc(
-          var(--throw-x) * 0.4
-        ),
-        calc(
-          var(--throw-y) * 0.75
-        )
+        calc(var(--throw-x) * 0.4),
+        calc(var(--throw-y) * 0.75)
       )
       rotate(180deg);
   }
@@ -371,8 +383,6 @@ body {
   }
 }
 
-/* CAPTURED POSITION */
-
 .pokeball-captured {
   opacity: 1;
 
@@ -387,8 +397,6 @@ body {
 
   pointer-events: none;
 }
-
-/* SHAKE */
 
 .pokeball-shaking {
   opacity: 1;
@@ -447,9 +455,9 @@ body {
   }
 }
 
-/* ============================= */
-/* DIALOGUE */
-/* ============================= */
+/* =========================
+   DIALOGUE
+========================= */
 
 .dialogue {
   position: absolute;
@@ -457,18 +465,14 @@ body {
   left: 50%;
   top: 22%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   background: #fff;
-
   color: #222;
 
-  border:
-    4px solid #222;
+  border: 4px solid #222;
 
-  padding:
-    14px 20px;
+  padding: 14px 20px;
 
   min-width: 260px;
   max-width: 420px;
@@ -478,7 +482,6 @@ body {
     monospace;
 
   font-size: 14px;
-
   line-height: 1.6;
 
   text-align: center;
@@ -486,7 +489,6 @@ body {
   z-index: 20;
 
   cursor: pointer;
-
   user-select: none;
 
   box-shadow:
@@ -517,11 +519,8 @@ body {
 
   background: white;
 
-  border-right:
-    4px solid #222;
-
-  border-bottom:
-    4px solid #222;
+  border-right: 4px solid #222;
+  border-bottom: 4px solid #222;
 
   transform:
     translateX(-50%)
@@ -576,19 +575,17 @@ body {
 @keyframes bounce {
   0%,
   100% {
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 
   50% {
-    transform:
-      translateY(4px);
+    transform: translateY(4px);
   }
 }
 
-/* ============================= */
-/* CHOOSE POKEMON */
-/* ============================= */
+/* =========================
+   INITIAL CATCH TUTORIAL
+========================= */
 
 .catch-tutorial {
   position: absolute;
@@ -596,8 +593,7 @@ body {
   left: 50%;
   top: 15%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   text-align: center;
 
@@ -624,8 +620,7 @@ body {
 }
 
 .catch-title {
-  margin:
-    0 0 14px;
+  margin: 0 0 14px;
 
   font-size: 18px;
 }
@@ -634,7 +629,6 @@ body {
   margin: 0;
 
   font-size: 9px;
-
   line-height: 2;
 
   opacity: 0.9;
@@ -658,18 +652,19 @@ body {
   }
 }
 
-/* ============================= */
-/* SELECTED LABEL */
-/* ============================= */
+/* =========================
+   SELECTED POKEMON MESSAGE
+========================= */
 
 .selected-label {
   position: absolute;
 
   left: 50%;
-  bottom: 175px;
+  bottom: 185px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
+
+  width: 520px;
 
   font-family:
     "Press Start 2P",
@@ -679,17 +674,37 @@ body {
 
   color: white;
 
-  text-shadow:
-    2px 2px 0 #222;
+  text-align: center;
 
   z-index: 15;
 
   pointer-events: none;
+
+  text-shadow:
+    2px 2px 0 #222,
+    -1px -1px 0 #222,
+    1px -1px 0 #222,
+    -1px 1px 0 #222;
 }
 
-/* ============================= */
-/* AIM TRAJECTORY */
-/* ============================= */
+.selected-name,
+.selected-instruction {
+  display: block;
+}
+
+.selected-name {
+  line-height: 1.6;
+}
+
+.selected-instruction {
+  margin-top: 14px;
+
+  line-height: 1.8;
+}
+
+/* =========================
+   AIM TRAJECTORY
+========================= */
 
 .aim-guide {
   position: absolute;
@@ -710,18 +725,16 @@ body {
   fill: none;
 
   stroke: white;
-
   stroke-width: 4;
 
-  stroke-dasharray:
-    5 10;
+  stroke-dasharray: 5 10;
 
   opacity: 0.3;
 }
 
-/* ============================= */
-/* PORTFOLIO CARD */
-/* ============================= */
+/* =========================
+   CARD OVERLAY
+========================= */
 
 .card-overlay {
   position: absolute;
@@ -729,17 +742,11 @@ body {
   inset: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   background:
-    rgba(
-      0,
-      0,
-      0,
-      0.45
-    );
+    rgba(0, 0, 0, 0.45);
 
   z-index: 50;
 
@@ -748,6 +755,10 @@ body {
     0.3s
     steps(4);
 }
+
+/* =========================
+   NORMAL CARD
+========================= */
 
 .pokemon-card {
   position: relative;
@@ -758,8 +769,7 @@ body {
 
   padding: 18px;
 
-  background:
-    #d8a85e;
+  background: #d8a85e;
 
   border:
     8px solid #f1d37a;
@@ -767,12 +777,7 @@ body {
   box-shadow:
     0 0 0 5px #4b3525,
     12px 12px 0
-      rgba(
-        0,
-        0,
-        0,
-        0.35
-      );
+      rgba(0, 0, 0, 0.35);
 
   font-family:
     "Press Start 2P",
@@ -784,6 +789,57 @@ body {
     steps(6);
 }
 
+/* =========================
+   ACCOMPLISHMENTS CARD
+========================= */
+
+.accomplishments-card {
+  width: 620px;
+
+  max-height: 88vh;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 24px;
+}
+
+.accomplishments-card .card-image-area {
+  height: 150px;
+}
+
+.accomplishments-card .card-pokemon {
+  width: 115px;
+}
+
+/* SCROLLBAR */
+
+.accomplishments-card::-webkit-scrollbar {
+  width: 12px;
+}
+
+.accomplishments-card::-webkit-scrollbar-track {
+  background: #f4dda0;
+
+  border:
+    2px solid #4b3525;
+}
+
+.accomplishments-card::-webkit-scrollbar-thumb {
+  background: #f1d34f;
+
+  border:
+    2px solid #4b3525;
+}
+
+.accomplishments-card::-webkit-scrollbar-thumb:hover {
+  background: #d8a85e;
+}
+
+/* =========================
+   CARD HEADER
+========================= */
+
 .card-header {
   display: flex;
 
@@ -793,6 +849,8 @@ body {
   align-items: center;
 
   margin-bottom: 14px;
+
+  padding-right: 48px;
 
   color: #2b2118;
 }
@@ -805,6 +863,10 @@ body {
   font-size: 8px;
 }
 
+/* =========================
+   CARD IMAGE
+========================= */
+
 .card-image-area {
   height: 190px;
 
@@ -813,8 +875,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  background:
-    #f4dda0;
+  background: #f4dda0;
 
   border:
     5px solid #4b3525;
@@ -829,6 +890,10 @@ body {
 
   image-rendering: pixelated;
 }
+
+/* =========================
+   NORMAL CARD INFO
+========================= */
 
 .card-info {
   color: #2b2118;
@@ -847,6 +912,8 @@ body {
   font-size: 8px;
 
   opacity: 0.75;
+
+  line-height: 1.7;
 }
 
 .card-info p {
@@ -879,11 +946,113 @@ body {
   text-align: right;
 }
 
+/* =========================
+   ACCOMPLISHMENTS
+========================= */
+
+.accomplishments-section {
+  color: #2b2118;
+}
+
+.accomplishments-section h2 {
+  margin:
+    0 0 10px;
+
+  font-size: 14px;
+}
+
+.achievement-group {
+  margin-top: 24px;
+}
+
+.achievement-group-title {
+  margin:
+    0 0 12px;
+
+  padding-bottom: 8px;
+
+  border-bottom:
+    4px solid #4b3525;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+.achievement-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 12px;
+}
+
+.achievement-card {
+  background: #fff3b0;
+
+  border:
+    4px solid #4b3525;
+
+  padding: 12px;
+
+  min-height: 120px;
+
+  box-shadow:
+    4px 4px 0
+      rgba(0, 0, 0, 0.2);
+}
+
+.achievement-card h4 {
+  margin:
+    0 0 10px;
+
+  font-size: 8px;
+
+  line-height: 1.5;
+}
+
+.achievement-result {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 8px;
+
+  line-height: 1.5;
+}
+
+.achievement-meta {
+  margin: 0;
+
+  font-size:
+    6px !important;
+
+  line-height:
+    1.7 !important;
+}
+
+.achievement-organization,
+.achievement-year {
+  display: block;
+}
+
+.achievement-year {
+  margin-top: 10px;
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
 .card-close {
   position: absolute;
 
-  top: -18px;
-  right: -18px;
+  top: 10px;
+  right: 10px;
 
   width: 38px;
   height: 38px;
@@ -903,13 +1072,16 @@ body {
 
   cursor: pointer;
 
-  z-index: 2;
+  z-index: 100;
 }
 
 .card-close:hover {
-  transform:
-    scale(1.1);
+  transform: scale(1.1);
 }
+
+/* =========================
+   CARD ANIMATIONS
+========================= */
 
 @keyframes cardPop {
   from {

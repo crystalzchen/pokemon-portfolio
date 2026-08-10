@@ -11,7 +11,7 @@ const introDialogue = [
   "Hi! I'm Crystal!",
   "Welcome to my portfolio!",
   "There are a few Pokémon hiding around here...",
-  "Each one has something to show you!",
+  "Each one reveals something about me!",
   "Try catching one!"
 ];
 
@@ -80,21 +80,16 @@ function App() {
 
   const selectedPokemon =
     pokemonList.find(
-      (pokemon) =>
-        pokemon.id === selectedPokemonId
+      (pokemon) => pokemon.id === selectedPokemonId
     ) ?? null;
 
   const activeCardPokemon =
     pokemonList.find(
-      (pokemon) =>
-        pokemon.id === activeCardId
+      (pokemon) => pokemon.id === activeCardId
     ) ?? null;
 
   function handleDialogueClick() {
-    if (
-      dialogueIndex <
-      introDialogue.length - 1
-    ) {
+    if (dialogueIndex < introDialogue.length - 1) {
       setDialogueIndex(dialogueIndex + 1);
       return;
     }
@@ -110,13 +105,10 @@ function App() {
 
   function handleEncounterClick() {
     setShowEncounterDialogue(false);
-
     setShowCatchTutorial(true);
   }
 
-  function calculateAimPath(
-    pokemonId: string
-  ) {
+  function calculateAimPath(pokemonId: string) {
     const target =
       pokemonRefs.current[pokemonId];
 
@@ -167,9 +159,7 @@ function App() {
     });
   }
 
-  function handlePokemonClick(
-    pokemonId: string
-  ) {
+  function handlePokemonClick(pokemonId: string) {
     if (
       isThrowing ||
       isShaking ||
@@ -200,9 +190,7 @@ function App() {
     }
 
     const target =
-      pokemonRefs.current[
-        selectedPokemonId
-      ];
+      pokemonRefs.current[selectedPokemonId];
 
     const ball =
       pokeballRef.current;
@@ -252,18 +240,10 @@ function App() {
 
     setIsThrowing(true);
 
-    /*
-      Ball reaches selected Pokémon
-    */
-
     setTimeout(() => {
       setCapturingPokemonId(
         selectedPokemonId
       );
-
-      /*
-        Pokémon shrinks into ball
-      */
 
       setTimeout(() => {
         setCapturingPokemonId(null);
@@ -275,10 +255,6 @@ function App() {
         setIsThrowing(false);
 
         setIsShaking(true);
-
-        /*
-          Ball shakes three times
-        */
 
         setTimeout(() => {
           setIsShaking(false);
@@ -332,12 +308,9 @@ function App() {
         ref={worldRef}
         className="world"
         style={{
-          backgroundImage:
-            `url(${forest})`
+          backgroundImage: `url(${forest})`
         }}
       >
-        {/* TRAINER */}
-
         <img
           className="trainer"
           src={trainer}
@@ -349,16 +322,10 @@ function App() {
         {showDialogue && (
           <div
             className="dialogue"
-            onClick={
-              handleDialogueClick
-            }
+            onClick={handleDialogueClick}
           >
             <p>
-              {
-                introDialogue[
-                  dialogueIndex
-                ]
-              }
+              {introDialogue[dialogueIndex]}
             </p>
 
             <span className="dialogue-continue">
@@ -371,14 +338,12 @@ function App() {
           </div>
         )}
 
-        {/* WILD POKEMON DIALOGUE */}
+        {/* POKEMON APPEAR DIALOGUE */}
 
         {showEncounterDialogue && (
           <div
             className="dialogue encounter-dialogue"
-            onClick={
-              handleEncounterClick
-            }
+            onClick={handleEncounterClick}
           >
             <p>
               Wild Pokémon appeared!
@@ -394,7 +359,7 @@ function App() {
           </div>
         )}
 
-        {/* CHOOSE POKEMON INSTRUCTIONS */}
+        {/* INITIAL CATCH INSTRUCTIONS */}
 
         {showCatchTutorial && (
           <div className="catch-tutorial">
@@ -410,84 +375,76 @@ function App() {
           </div>
         )}
 
-        {/* ALL POKEMON */}
+        {/* POKEMON */}
 
         {showPokemon &&
-          pokemonList.map(
-            (pokemon) => {
-              const isCaught =
-                caughtPokemonId ===
-                pokemon.id;
+          pokemonList.map((pokemon) => {
+            const isCaught =
+              caughtPokemonId === pokemon.id;
 
-              const isCapturing =
-                capturingPokemonId ===
-                pokemon.id;
+            const isCapturing =
+              capturingPokemonId === pokemon.id;
 
-              const isSelected =
-                selectedPokemonId ===
-                pokemon.id;
+            const isSelected =
+              selectedPokemonId === pokemon.id;
 
-              if (isCaught) {
-                return null;
-              }
-
-              return (
-                <img
-                  key={
-                    pokemon.id
-                  }
-                  ref={(
-                    element
-                  ) => {
-                    pokemonRefs.current[
-                      pokemon.id
-                    ] = element;
-                  }}
-                  className={`pokemon ${
-                    !pokemonHaveEntered
-                      ? `pokemon-entering-${pokemon.enterFrom}`
-                      : ""
-                  } ${
-                    isCapturing
-                      ? "pokemon-capturing"
-                      : ""
-                  } ${
-                    isSelected
-                      ? "pokemon-selected"
-                      : ""
-                  }`}
-                  src={
-                    pokemon.sprite
-                  }
-                  alt={
-                    pokemon.name
-                  }
-                  onClick={() =>
-                    handlePokemonClick(
-                      pokemon.id
-                    )
-                  }
-                  style={{
-                    left: `${pokemon.x}%`,
-                    top: `${pokemon.y}%`,
-                    width: `${pokemon.width}px`
-                  }}
-                />
-              );
+            if (isCaught) {
+              return null;
             }
-          )}
 
-        {/* SELECTED POKEMON LABEL */}
+            return (
+              <img
+                key={pokemon.id}
+                ref={(element) => {
+                  pokemonRefs.current[
+                    pokemon.id
+                  ] = element;
+                }}
+                className={`pokemon ${
+                  !pokemonHaveEntered
+                    ? `pokemon-entering-${pokemon.enterFrom}`
+                    : ""
+                } ${
+                  isCapturing
+                    ? "pokemon-capturing"
+                    : ""
+                } ${
+                  isSelected
+                    ? "pokemon-selected"
+                    : ""
+                }`}
+                src={pokemon.sprite}
+                alt={pokemon.name}
+                onClick={() =>
+                  handlePokemonClick(
+                    pokemon.id
+                  )
+                }
+                style={{
+                  left: `${pokemon.x}%`,
+                  top: `${pokemon.y}%`,
+                  width: `${pokemon.width}px`
+                }}
+              />
+            );
+          })}
+
+        {/* SELECTED POKEMON INSTRUCTION */}
 
         {selectedPokemon &&
           pokeballActive && (
             <div className="selected-label">
-              Selected:{" "}
-              {selectedPokemon.name}
+              <span className="selected-name">
+                {selectedPokemon.name} selected!
+              </span>
+
+              <span className="selected-instruction">
+                Click the Poké Ball to catch it!
+              </span>
             </div>
           )}
 
-        {/* DYNAMIC AIM PATH */}
+        {/* AIM TRAJECTORY */}
 
         {pokeballActive &&
           selectedPokemon &&
@@ -495,12 +452,10 @@ function App() {
             <svg
               className="aim-guide"
               viewBox={`0 0 ${
-                worldRef.current
-                  ?.clientWidth ??
+                worldRef.current?.clientWidth ??
                 1000
               } ${
-                worldRef.current
-                  ?.clientHeight ??
+                worldRef.current?.clientHeight ??
                 800
               }`}
               preserveAspectRatio="none"
@@ -549,16 +504,13 @@ function App() {
           }`}
           src={pokeball}
           alt="Poké Ball"
-          onClick={
-            handlePokeballClick
-          }
+          onClick={handlePokeballClick}
           style={
             isThrowing ||
             caughtPokemonId
               ? ({
                   "--throw-x":
                     `${throwOffset.x}px`,
-
                   "--throw-y":
                     `${throwOffset.y}px`
                 } as React.CSSProperties)
@@ -577,11 +529,7 @@ function App() {
               }
             >
               <p>
-                Gotcha!{" "}
-                {
-                  selectedPokemon.name
-                }{" "}
-                was caught!
+                Gotcha! {selectedPokemon.name} was caught!
               </p>
 
               <span className="dialogue-continue">
@@ -598,7 +546,14 @@ function App() {
 
         {activeCardPokemon && (
           <div className="card-overlay">
-            <div className="pokemon-card">
+            <div
+              className={`pokemon-card ${
+                activeCardPokemon.section ===
+                "ACCOMPLISHMENTS"
+                  ? "accomplishments-card"
+                  : ""
+              }`}
+            >
               <button
                 className="card-close"
                 onClick={
@@ -614,9 +569,7 @@ function App() {
                 </span>
 
                 <span className="card-hp">
-                  {
-                    activeCardPokemon.section
-                  }
+                  {activeCardPokemon.section}
                 </span>
               </div>
 
@@ -632,53 +585,139 @@ function App() {
                 />
               </div>
 
-              <div className="card-info">
-                <h2>
-                  {
-                    activeCardPokemon.cardTitle
-                  }
-                </h2>
+              {/* ACCOMPLISHMENTS CARD */}
 
-                <p className="card-subtitle">
-                  {
-                    activeCardPokemon.cardSubtitle
-                  }
-                </p>
-
-                <p>
-                  {
-                    activeCardPokemon.description
-                  }
-                </p>
-
-                <div className="card-stats">
-                  <span>
+              {activeCardPokemon.section ===
+              "ACCOMPLISHMENTS" ? (
+                <div className="accomplishments-section">
+                  <h2>
                     {
-                      activeCardPokemon.statOneLabel
+                      activeCardPokemon.cardTitle
                     }
-                  </span>
+                  </h2>
 
-                  <strong>
+                  <p className="card-subtitle">
                     {
-                      activeCardPokemon.statOneValue
+                      activeCardPokemon.cardSubtitle
                     }
-                  </strong>
+                  </p>
+
+                  {[
+                    "Case Competition",
+                    "Scholarship",
+                    "Achievement"
+                  ].map((category) => {
+                    const items =
+                      activeCardPokemon.accomplishments?.filter(
+                        (item) =>
+                          item.category ===
+                          category
+                      ) ?? [];
+
+                    if (items.length === 0) {
+                      return null;
+                    }
+
+                    return (
+                      <div
+                        className="achievement-group"
+                        key={category}
+                      >
+                        <h3 className="achievement-group-title">
+                          {category ===
+                          "Case Competition"
+                            ? "CASE COMPETITIONS"
+                            : category ===
+                              "Scholarship"
+                            ? "SCHOLARSHIPS"
+                            : "ACHIEVEMENTS"}
+                        </h3>
+
+                        <div className="achievement-grid">
+                          {items.map(
+                            (item) => (
+                              <div
+                                className="achievement-card"
+                                key={`${item.title}-${item.year}`}
+                              >
+                                <h4>
+                                  {item.title}
+                                </h4>
+
+                                <strong className="achievement-result">
+                                  {item.result}
+                                </strong>
+
+                                <p className="achievement-meta">
+                                  <span className="achievement-organization">
+                                    {
+                                      item.organization
+                                    }
+                                  </span>
+
+                                  <span className="achievement-year">
+                                    {item.year}
+                                  </span>
+                                </p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+              ) : (
+                /* NORMAL POKEMON CARD */
 
-                <div className="card-stats">
-                  <span>
+                <div className="card-info">
+                  <h2>
                     {
-                      activeCardPokemon.statTwoLabel
+                      activeCardPokemon.cardTitle
                     }
-                  </span>
+                  </h2>
 
-                  <strong>
+                  <p className="card-subtitle">
                     {
-                      activeCardPokemon.statTwoValue
+                      activeCardPokemon.cardSubtitle
                     }
-                  </strong>
+                  </p>
+
+                  <p>
+                    {
+                      activeCardPokemon.description
+                    }
+                  </p>
+
+                  <div className="card-stats">
+                    <span>
+                      {
+                        activeCardPokemon.statOneLabel
+                      }
+                    </span>
+
+                    <strong>
+                      {
+                        activeCardPokemon.statOneValue
+                      }
+                    </strong>
+                  </div>
+
+                  <div className="card-stats">
+                    <span>
+                      {
+                        activeCardPokemon.statTwoLabel
+                      }
+                    </span>
+
+                    <strong>
+                      {
+                        activeCardPokemon.statTwoValue
+                      }
+                    </strong>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         )}
