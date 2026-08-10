@@ -32,7 +32,11 @@ body {
   background-size: cover;
 
   image-rendering: pixelated;
+
+  overflow: hidden;
 }
+
+/* TRAINER */
 
 .trainer {
   position: absolute;
@@ -46,7 +50,11 @@ body {
   transform: translate(-50%, -50%);
 
   image-rendering: pixelated;
+
+  z-index: 5;
 }
+
+/* POKÉ BALL */
 
 .pokeball {
   position: absolute;
@@ -61,29 +69,173 @@ body {
 
   image-rendering: pixelated;
 
-  cursor: pointer;
-
   z-index: 10;
+
+  opacity: 0.65;
+  filter: grayscale(25%);
+
+  transition:
+    opacity 0.2s,
+    filter 0.2s;
+
+  user-select: none;
+  touch-action: none;
 }
+
+.pokeball-active {
+  opacity: 1;
+  filter: none;
+
+  cursor: grab;
+
+  animation: pokeballReady 0.8s steps(2) infinite;
+}
+
+.pokeball-aiming {
+  cursor: grabbing;
+
+  animation: none;
+}
+
+.pokeball-throwing {
+  opacity: 1;
+  filter: none;
+
+  animation: throwBall 0.7s ease-out forwards;
+
+  pointer-events: none;
+}
+
+.pokeball-captured {
+  opacity: 1;
+  filter: none;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--throw-x),
+      var(--throw-y)
+    );
+
+  pointer-events: none;
+}
+
+.pokeball-shaking {
+  opacity: 1;
+  filter: none;
+
+  animation: pokeballShake 0.55s steps(4) 3;
+
+  pointer-events: none;
+}
+
+@keyframes pokeballReady {
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translateY(-8px);
+  }
+}
+
+@keyframes throwBall {
+  0% {
+    transform:
+      translateX(-50%)
+      translate(0, 0)
+      rotate(0deg);
+  }
+
+  40% {
+    transform:
+      translateX(-50%)
+      translate(
+        calc(var(--throw-x) * 0.4),
+        calc(var(--throw-y) * 0.75)
+      )
+      rotate(180deg);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--throw-x),
+        var(--throw-y)
+      )
+      rotate(540deg);
+  }
+}
+
+@keyframes pokeballShake {
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--throw-x),
+        var(--throw-y)
+      )
+      rotate(0deg);
+  }
+
+  25% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--throw-x),
+        var(--throw-y)
+      )
+      rotate(-12deg);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--throw-x),
+        var(--throw-y)
+      )
+      rotate(12deg);
+  }
+
+  75% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--throw-x),
+        var(--throw-y)
+      )
+      rotate(-8deg);
+  }
+}
+
+/* DIALOGUE */
 
 .dialogue {
   position: absolute;
 
   left: 50%;
-  top: 27%;
+  top: 20%;
 
   transform: translateX(-50%);
 
   background: #fff;
   color: #222;
 
-  /* Pixel-style border */
   border: 4px solid #222;
   border-radius: 0;
 
   padding: 14px 20px;
 
-  min-width: 220px;
+  min-width: 260px;
+  max-width: 420px;
 
   font-family: "Press Start 2P", monospace;
   font-size: 14px;
@@ -93,7 +245,9 @@ body {
 
   z-index: 20;
 
-  /* Extra pixel border effect */
+  cursor: pointer;
+  user-select: none;
+
   box-shadow:
     4px 0 0 #fff,
     -4px 0 0 #fff,
@@ -125,5 +279,180 @@ body {
   border-right: 4px solid #222;
   border-bottom: 4px solid #222;
 
-  transform: translateX(-50%) rotate(45deg);
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+}
+
+.dialogue-continue {
+  display: block;
+
+  margin-top: 12px;
+
+  font-family: "Press Start 2P", monospace;
+  font-size: 7px;
+  font-weight: normal;
+
+  opacity: 0.55;
+
+  animation: blink 1.2s steps(2) infinite;
+}
+
+.dialogue-next {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 10px;
+
+  animation: bounce 0.8s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+/* EEVEE */
+
+.eevee {
+  position: absolute;
+
+  left: 68%;
+  top: 48%;
+
+  width: 110px;
+  height: auto;
+
+  image-rendering: pixelated;
+
+  z-index: 6;
+
+  animation:
+    eeveeEnter 1.2s steps(8) forwards,
+    eeveeIdle 1.2s steps(2) 1.2s infinite;
+}
+
+@keyframes eeveeEnter {
+  from {
+    transform: translateX(500px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes eeveeIdle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* AIM GUIDE */
+
+.aim-guide {
+  position: absolute;
+
+  left: 50%;
+  bottom: 110px;
+
+  width: 400px;
+  height: 300px;
+
+  pointer-events: none;
+
+  overflow: visible;
+
+  z-index: 8;
+}
+
+.aim-path {
+  fill: none;
+
+  stroke: white;
+  stroke-width: 4;
+
+  stroke-dasharray: 5 10;
+
+  opacity: 0.3;
+}
+
+/* CATCH TUTORIAL */
+
+.catch-tutorial {
+  position: absolute;
+
+  left: 50%;
+  top: 15%;
+
+  transform: translateX(-50%);
+
+  text-align: center;
+
+  font-family: "Press Start 2P", monospace;
+
+  color: white;
+
+  z-index: 15;
+
+  user-select: none;
+  pointer-events: none;
+
+  text-shadow:
+    3px 3px 0 #222,
+    -2px -2px 0 #222,
+    2px -2px 0 #222,
+    -2px 2px 0 #222;
+
+  animation: tutorialAppear 0.4s steps(4);
+}
+
+.catch-title {
+  margin: 0 0 14px;
+
+  font-size: 18px;
+}
+
+.catch-instructions {
+  margin: 0;
+
+  font-size: 9px;
+  line-height: 2;
+
+  opacity: 0.9;
+}
+
+@keyframes tutorialAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
