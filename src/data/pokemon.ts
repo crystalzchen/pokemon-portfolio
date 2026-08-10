@@ -14,6 +14,14 @@ export interface Accomplishment {
     | "Achievement";
 }
 
+export interface Experience {
+  company: string;
+  role: string;
+  date: string;
+  location: string;
+  description: string;
+}
+
 export interface PokemonData {
   id: string;
   name: string;
@@ -38,6 +46,8 @@ export interface PokemonData {
   statTwoValue: string;
 
   accomplishments?: Accomplishment[];
+
+  experiences?: Experience[];
 }
 
 export const pokemonList: PokemonData[] = [
@@ -122,7 +132,40 @@ export const pokemonList: PokemonData[] = [
     statOneValue: "Data + Software",
 
     statTwoLabel: "Strengths",
-    statTwoValue: "Technical / Collaborative"
+    statTwoValue: "Technical / Collaborative",
+
+    experiences: [
+  {
+    company: "Equifax Canada",
+    role: "Data Analyst",
+    date: "May 2026 – Aug 2026",
+    location: "Toronto, ON",
+
+    description:
+      "Built automated data monitoring and reporting workflows using SQL, Python, BigQuery, and AI tools, while developing dashboards and natural-language analytics experiences."
+  },
+
+  {
+    company: "Luminwell",
+    role: "Web App Developer",
+    date: "2025",
+    location: "Remote",
+
+    description:
+      "Contributed to the development of a mental health web application, working on interactive web experiences and application functionality."
+  },
+
+  {
+    company: "Kumon Math & Reading Centre",
+    role: "Centre & Early Learner Assistant",
+    date: "Nov 2022 – Sep 2025",
+    location: "Vaughan, ON",
+
+    description:
+      "Delivered individualized instruction, mentored new tutors, supported centre operations, and communicated student progress with families."
+  }
+]
+
   },
 
   {
