@@ -36,7 +36,9 @@ body {
   overflow: hidden;
 }
 
+/* ============================= */
 /* TRAINER */
+/* ============================= */
 
 .trainer {
   position: absolute;
@@ -47,14 +49,211 @@ body {
   width: 150px;
   height: auto;
 
-  transform: translate(-50%, -50%);
+  transform: translate(
+    -50%,
+    -50%
+  );
 
   image-rendering: pixelated;
 
   z-index: 5;
 }
 
-/* POKÉ BALL */
+/* ============================= */
+/* POKEMON */
+/* ============================= */
+
+.pokemon {
+  position: absolute;
+
+  height: auto;
+
+  image-rendering: pixelated;
+
+  z-index: 6;
+
+  cursor: pointer;
+
+  animation:
+    pokemonIdle
+    1.2s
+    steps(2)
+    infinite;
+}
+
+/* ENTER FROM RIGHT */
+
+.pokemon-entering-right {
+  animation:
+    pokemonEnterRight
+      1.2s
+      steps(8)
+      forwards,
+
+    pokemonIdle
+      1.2s
+      steps(2)
+      1.2s
+      infinite;
+}
+
+/* ENTER FROM LEFT */
+
+.pokemon-entering-left {
+  animation:
+    pokemonEnterLeft
+      1.2s
+      steps(8)
+      forwards,
+
+    pokemonIdle
+      1.2s
+      steps(2)
+      1.2s
+      infinite;
+}
+
+@keyframes pokemonEnterRight {
+  from {
+    transform:
+      translateX(500px);
+  }
+
+  to {
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes pokemonEnterLeft {
+  from {
+    transform:
+      translateX(-500px);
+  }
+
+  to {
+    transform:
+      translateX(0);
+  }
+}
+
+/* IDLE BOUNCE */
+
+@keyframes pokemonIdle {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-5px);
+  }
+}
+
+/* SELECTED POKEMON */
+
+.pokemon-selected {
+  cursor: pointer;
+
+  filter:
+    brightness(1.1)
+    drop-shadow(
+      0 0 8px
+      rgba(
+        255,
+        255,
+        255,
+        0.8
+      )
+    );
+}
+
+/* CAPTURE */
+
+.pokemon-capturing {
+  transform-origin: center;
+
+  animation:
+    pokemonCapture
+    0.5s
+    steps(6)
+    forwards;
+}
+
+@keyframes pokemonCapture {
+  0% {
+    transform:
+      scale(1)
+      translateY(0);
+
+    opacity: 1;
+
+    filter:
+      brightness(1);
+  }
+
+  25% {
+    transform:
+      scale(0.9)
+      translateY(-5px);
+
+    opacity: 1;
+
+    filter:
+      brightness(2)
+      drop-shadow(
+        0 0 8px white
+      );
+  }
+
+  50% {
+    transform:
+      scale(0.65)
+      translateY(5px);
+
+    opacity: 0.9;
+
+    filter:
+      brightness(3)
+      drop-shadow(
+        0 0 14px white
+      );
+  }
+
+  75% {
+    transform:
+      scale(0.35)
+      translateY(15px);
+
+    opacity: 0.6;
+
+    filter:
+      brightness(4)
+      drop-shadow(
+        0 0 18px white
+      );
+  }
+
+  100% {
+    transform:
+      scale(0.05)
+      translateY(25px);
+
+    opacity: 0;
+
+    filter:
+      brightness(5)
+      drop-shadow(
+        0 0 22px white
+      );
+  }
+}
+
+/* ============================= */
+/* POKEBALL */
+/* ============================= */
 
 .pokeball {
   position: absolute;
@@ -65,14 +264,17 @@ body {
   width: 225px;
   height: auto;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   image-rendering: pixelated;
 
   z-index: 10;
 
   opacity: 0.65;
-  filter: grayscale(25%);
+
+  filter:
+    grayscale(25%);
 
   transition:
     opacity 0.2s,
@@ -86,43 +288,23 @@ body {
 
   filter:
     brightness(1.15)
-    drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+    drop-shadow(
+      0 0 10px
+      rgba(
+        255,
+        255,
+        255,
+        0.9
+      )
+    );
 
   cursor: pointer;
 
-  animation: pokeballReady 0.8s steps(2) infinite;
-}
-
-.pokeball-throwing {
-  opacity: 1;
-  filter: none;
-
-  animation: throwBall 0.7s ease-out forwards;
-
-  pointer-events: none;
-}
-
-.pokeball-captured {
-  opacity: 1;
-  filter: none;
-
-  transform:
-    translateX(-50%)
-    translate(
-      var(--throw-x),
-      var(--throw-y)
-    );
-
-  pointer-events: none;
-}
-
-.pokeball-shaking {
-  opacity: 1;
-  filter: none;
-
-  animation: pokeballShake 0.55s steps(4) 3;
-
-  pointer-events: none;
+  animation:
+    pokeballReady
+    0.8s
+    steps(2)
+    infinite;
 }
 
 @keyframes pokeballReady {
@@ -140,6 +322,22 @@ body {
   }
 }
 
+/* THROW */
+
+.pokeball-throwing {
+  opacity: 1;
+
+  filter: none;
+
+  animation:
+    throwBall
+    0.7s
+    ease-out
+    forwards;
+
+  pointer-events: none;
+}
+
 @keyframes throwBall {
   0% {
     transform:
@@ -152,8 +350,12 @@ body {
     transform:
       translateX(-50%)
       translate(
-        calc(var(--throw-x) * 0.4),
-        calc(var(--throw-y) * 0.75)
+        calc(
+          var(--throw-x) * 0.4
+        ),
+        calc(
+          var(--throw-y) * 0.75
+        )
       )
       rotate(180deg);
   }
@@ -167,6 +369,39 @@ body {
       )
       rotate(540deg);
   }
+}
+
+/* CAPTURED POSITION */
+
+.pokeball-captured {
+  opacity: 1;
+
+  filter: none;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--throw-x),
+      var(--throw-y)
+    );
+
+  pointer-events: none;
+}
+
+/* SHAKE */
+
+.pokeball-shaking {
+  opacity: 1;
+
+  filter: none;
+
+  animation:
+    pokeballShake
+    0.55s
+    steps(4)
+    3;
+
+  pointer-events: none;
 }
 
 @keyframes pokeballShake {
@@ -212,7 +447,9 @@ body {
   }
 }
 
+/* ============================= */
 /* DIALOGUE */
+/* ============================= */
 
 .dialogue {
   position: absolute;
@@ -220,20 +457,28 @@ body {
   left: 50%;
   top: 22%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   background: #fff;
+
   color: #222;
 
-  border: 4px solid #222;
+  border:
+    4px solid #222;
 
-  padding: 14px 20px;
+  padding:
+    14px 20px;
 
   min-width: 260px;
   max-width: 420px;
 
-  font-family: "Press Start 2P", monospace;
+  font-family:
+    "Press Start 2P",
+    monospace;
+
   font-size: 14px;
+
   line-height: 1.6;
 
   text-align: center;
@@ -241,6 +486,7 @@ body {
   z-index: 20;
 
   cursor: pointer;
+
   user-select: none;
 
   box-shadow:
@@ -271,8 +517,11 @@ body {
 
   background: white;
 
-  border-right: 4px solid #222;
-  border-bottom: 4px solid #222;
+  border-right:
+    4px solid #222;
+
+  border-bottom:
+    4px solid #222;
 
   transform:
     translateX(-50%)
@@ -284,12 +533,19 @@ body {
 
   margin-top: 12px;
 
-  font-family: "Press Start 2P", monospace;
+  font-family:
+    "Press Start 2P",
+    monospace;
+
   font-size: 7px;
 
   opacity: 0.55;
 
-  animation: blink 1.2s steps(2) infinite;
+  animation:
+    blink
+    1.2s
+    steps(2)
+    infinite;
 }
 
 .dialogue-next {
@@ -299,7 +555,11 @@ body {
 
   font-size: 10px;
 
-  animation: bounce 0.8s steps(2) infinite;
+  animation:
+    bounce
+    0.8s
+    steps(2)
+    infinite;
 }
 
 @keyframes blink {
@@ -316,126 +576,19 @@ body {
 @keyframes bounce {
   0%,
   100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(4px);
-  }
-}
-
-/* EEVEE */
-
-.eevee {
-  position: absolute;
-
-  left: 68%;
-  top: 48%;
-
-  width: 110px;
-  height: auto;
-
-  image-rendering: pixelated;
-
-  z-index: 6;
-
-  animation: eeveeIdle 1.2s steps(2) infinite;
-}
-
-.eevee-entering {
-  animation:
-    eeveeEnter 1.2s steps(8) forwards,
-    eeveeIdle 1.2s steps(2) 1.2s infinite;
-}
-
-@keyframes eeveeEnter {
-  from {
-    transform: translateX(500px);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes eeveeIdle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-.eevee-capturing {
-  transform-origin: center;
-
-  animation: eeveeCapture 0.5s steps(6) forwards;
-}
-
-@keyframes eeveeCapture {
-  0% {
     transform:
-      scale(1)
       translateY(0);
-
-    opacity: 1;
-
-    filter: brightness(1);
-  }
-
-  25% {
-    transform:
-      scale(0.9)
-      translateY(-5px);
-
-    opacity: 1;
-
-    filter:
-      brightness(2)
-      drop-shadow(0 0 8px white);
   }
 
   50% {
     transform:
-      scale(0.65)
-      translateY(5px);
-
-    opacity: 0.9;
-
-    filter:
-      brightness(3)
-      drop-shadow(0 0 14px white);
-  }
-
-  75% {
-    transform:
-      scale(0.35)
-      translateY(15px);
-
-    opacity: 0.6;
-
-    filter:
-      brightness(4)
-      drop-shadow(0 0 18px white);
-  }
-
-  100% {
-    transform:
-      scale(0.05)
-      translateY(25px);
-
-    opacity: 0;
-
-    filter:
-      brightness(5)
-      drop-shadow(0 0 22px white);
+      translateY(4px);
   }
 }
 
-/* CATCH TUTORIAL */
+/* ============================= */
+/* CHOOSE POKEMON */
+/* ============================= */
 
 .catch-tutorial {
   position: absolute;
@@ -443,11 +596,14 @@ body {
   left: 50%;
   top: 15%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   text-align: center;
 
-  font-family: "Press Start 2P", monospace;
+  font-family:
+    "Press Start 2P",
+    monospace;
 
   color: white;
 
@@ -461,11 +617,15 @@ body {
     2px -2px 0 #222,
     -2px 2px 0 #222;
 
-  animation: tutorialAppear 0.4s steps(4);
+  animation:
+    tutorialAppear
+    0.4s
+    steps(4);
 }
 
 .catch-title {
-  margin: 0 0 14px;
+  margin:
+    0 0 14px;
 
   font-size: 18px;
 }
@@ -474,6 +634,7 @@ body {
   margin: 0;
 
   font-size: 9px;
+
   line-height: 2;
 
   opacity: 0.9;
@@ -497,20 +658,50 @@ body {
   }
 }
 
-/* AIM GUIDE */
+/* ============================= */
+/* SELECTED LABEL */
+/* ============================= */
+
+.selected-label {
+  position: absolute;
+
+  left: 50%;
+  bottom: 175px;
+
+  transform:
+    translateX(-50%);
+
+  font-family:
+    "Press Start 2P",
+    monospace;
+
+  font-size: 8px;
+
+  color: white;
+
+  text-shadow:
+    2px 2px 0 #222;
+
+  z-index: 15;
+
+  pointer-events: none;
+}
+
+/* ============================= */
+/* AIM TRAJECTORY */
+/* ============================= */
 
 .aim-guide {
   position: absolute;
 
-  left: 50%;
-  bottom: 110px;
+  inset: 0;
 
-  width: 400px;
-  height: 300px;
-
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
 
   overflow: visible;
+
+  pointer-events: none;
 
   z-index: 8;
 }
@@ -519,54 +710,86 @@ body {
   fill: none;
 
   stroke: white;
+
   stroke-width: 4;
 
-  stroke-dasharray: 5 10;
+  stroke-dasharray:
+    5 10;
 
   opacity: 0.3;
 }
 
-/* ABOUT ME CARD */
+/* ============================= */
+/* PORTFOLIO CARD */
+/* ============================= */
 
 .card-overlay {
   position: absolute;
+
   inset: 0;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  background: rgba(0, 0, 0, 0.45);
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
 
   z-index: 50;
 
-  animation: fadeIn 0.3s steps(4);
+  animation:
+    fadeIn
+    0.3s
+    steps(4);
 }
 
 .pokemon-card {
   position: relative;
 
   width: 340px;
+
   min-height: 500px;
 
   padding: 18px;
 
-  background: #d8a85e;
+  background:
+    #d8a85e;
 
-  border: 8px solid #f1d37a;
+  border:
+    8px solid #f1d37a;
 
   box-shadow:
     0 0 0 5px #4b3525,
-    12px 12px 0 rgba(0, 0, 0, 0.35);
+    12px 12px 0
+      rgba(
+        0,
+        0,
+        0,
+        0.35
+      );
 
-  font-family: "Press Start 2P", monospace;
+  font-family:
+    "Press Start 2P",
+    monospace;
 
-  animation: cardPop 0.45s steps(6);
+  animation:
+    cardPop
+    0.45s
+    steps(6);
 }
 
 .card-header {
   display: flex;
-  justify-content: space-between;
+
+  justify-content:
+    space-between;
+
   align-items: center;
 
   margin-bottom: 14px;
@@ -586,19 +809,22 @@ body {
   height: 190px;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
-  background: #f4dda0;
+  background:
+    #f4dda0;
 
-  border: 5px solid #4b3525;
+  border:
+    5px solid #4b3525;
 
   margin-bottom: 16px;
 
   overflow: hidden;
 }
 
-.card-eevee {
+.card-pokemon {
   width: 150px;
 
   image-rendering: pixelated;
@@ -609,7 +835,8 @@ body {
 }
 
 .card-info h2 {
-  margin: 0 0 10px;
+  margin:
+    0 0 10px;
 
   font-size: 14px;
 }
@@ -618,25 +845,33 @@ body {
   margin-bottom: 18px;
 
   font-size: 8px;
+
   opacity: 0.75;
 }
 
 .card-info p {
   font-size: 8px;
+
   line-height: 1.8;
 }
 
 .card-stats {
   display: flex;
-  justify-content: space-between;
+
+  justify-content:
+    space-between;
+
   gap: 12px;
 
   margin-top: 14px;
+
   padding-top: 10px;
 
-  border-top: 3px solid #4b3525;
+  border-top:
+    3px solid #4b3525;
 
   font-size: 7px;
+
   line-height: 1.6;
 }
 
@@ -653,12 +888,17 @@ body {
   width: 38px;
   height: 38px;
 
-  border: 4px solid #222;
+  border:
+    4px solid #222;
 
   background: white;
+
   color: #222;
 
-  font-family: "Press Start 2P", monospace;
+  font-family:
+    "Press Start 2P",
+    monospace;
+
   font-size: 16px;
 
   cursor: pointer;
@@ -667,7 +907,8 @@ body {
 }
 
 .card-close:hover {
-  transform: scale(1.1);
+  transform:
+    scale(1.1);
 }
 
 @keyframes cardPop {

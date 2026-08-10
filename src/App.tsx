@@ -4,7 +4,8 @@ import "./App.css";
 import forest from "./assets/background/forest.png";
 import trainer from "./assets/trainer/trainer.png";
 import pokeball from "./assets/ui/pokeball.png";
-import eevee from "./assets/pokemon/eevee.png";
+
+import { pokemonList } from "./data/pokemon";
 
 const introDialogue = [
   "Hi! I'm Crystal!",
@@ -14,101 +15,274 @@ const introDialogue = [
   "Try catching one!"
 ];
 
+interface AimPath {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+}
+
 function App() {
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [showDialogue, setShowDialogue] = useState(true);
-  const [showEevee, setShowEevee] = useState(false);
-  const [showEncounterDialogue, setShowEncounterDialogue] = useState(false);
 
-  const [pokeballActive, setPokeballActive] = useState(false);
-  const [showCatchTutorial, setShowCatchTutorial] = useState(false);
+  const [showPokemon, setShowPokemon] = useState(false);
 
-  const [isThrowing, setIsThrowing] = useState(false);
-  const [throwOffset, setThrowOffset] = useState({ x: 0, y: 0 });
+  const [showEncounterDialogue, setShowEncounterDialogue] =
+    useState(false);
 
-  const [isCapturing, setIsCapturing] = useState(false);
-  const [eeveeCaught, setEeveeCaught] = useState(false);
-  const [isShaking, setIsShaking] = useState(false);
+  const [showCatchTutorial, setShowCatchTutorial] =
+    useState(false);
 
-  const [showCaughtDialogue, setShowCaughtDialogue] = useState(false);
-  const [showAboutCard, setShowAboutCard] = useState(false);
+  const [selectedPokemonId, setSelectedPokemonId] =
+    useState<string | null>(null);
 
-  const [eeveeHasEntered, setEeveeHasEntered] = useState(false);
+  const [capturingPokemonId, setCapturingPokemonId] =
+    useState<string | null>(null);
 
-  const eeveeRef = useRef<HTMLImageElement>(null);
-  const pokeballRef = useRef<HTMLImageElement>(null);
+  const [caughtPokemonId, setCaughtPokemonId] =
+    useState<string | null>(null);
+
+  const [activeCardId, setActiveCardId] =
+    useState<string | null>(null);
+
+  const [pokeballActive, setPokeballActive] =
+    useState(false);
+
+  const [isThrowing, setIsThrowing] =
+    useState(false);
+
+  const [isShaking, setIsShaking] =
+    useState(false);
+
+  const [throwOffset, setThrowOffset] = useState({
+    x: 0,
+    y: 0
+  });
+
+  const [aimPath, setAimPath] =
+    useState<AimPath | null>(null);
+
+  const [showCaughtDialogue, setShowCaughtDialogue] =
+    useState(false);
+
+  const [pokemonHaveEntered, setPokemonHaveEntered] =
+    useState(false);
+
+  const worldRef = useRef<HTMLDivElement>(null);
+
+  const pokeballRef =
+    useRef<HTMLImageElement>(null);
+
+  const pokemonRefs = useRef<
+    Record<string, HTMLImageElement | null>
+  >({});
+
+  const selectedPokemon =
+    pokemonList.find(
+      (pokemon) =>
+        pokemon.id === selectedPokemonId
+    ) ?? null;
+
+  const activeCardPokemon =
+    pokemonList.find(
+      (pokemon) =>
+        pokemon.id === activeCardId
+    ) ?? null;
 
   function handleDialogueClick() {
-    if (dialogueIndex < introDialogue.length - 1) {
+    if (
+      dialogueIndex <
+      introDialogue.length - 1
+    ) {
       setDialogueIndex(dialogueIndex + 1);
-    } else {
-      setShowDialogue(false);
-      setShowEevee(true);
-
-      setTimeout(() => {
-        setShowEncounterDialogue(true);
-        setEeveeHasEntered(true);
-      }, 1200);
+      return;
     }
+
+    setShowDialogue(false);
+    setShowPokemon(true);
+
+    setTimeout(() => {
+      setShowEncounterDialogue(true);
+      setPokemonHaveEntered(true);
+    }, 1200);
   }
 
   function handleEncounterClick() {
     setShowEncounterDialogue(false);
-    setPokeballActive(true);
+
     setShowCatchTutorial(true);
+  }
+
+  function calculateAimPath(
+    pokemonId: string
+  ) {
+    const target =
+      pokemonRefs.current[pokemonId];
+
+    const ball =
+      pokeballRef.current;
+
+    const world =
+      worldRef.current;
+
+    if (!target || !ball || !world) {
+      return;
+    }
+
+    const targetRect =
+      target.getBoundingClientRect();
+
+    const ballRect =
+      ball.getBoundingClientRect();
+
+    const worldRect =
+      world.getBoundingClientRect();
+
+    const startX =
+      ballRect.left -
+      worldRect.left +
+      ballRect.width / 2;
+
+    const startY =
+      ballRect.top -
+      worldRect.top +
+      ballRect.height / 2;
+
+    const endX =
+      targetRect.left -
+      worldRect.left +
+      targetRect.width / 2;
+
+    const endY =
+      targetRect.top -
+      worldRect.top +
+      targetRect.height / 2;
+
+    setAimPath({
+      startX,
+      startY,
+      endX,
+      endY
+    });
+  }
+
+  function handlePokemonClick(
+    pokemonId: string
+  ) {
+    if (
+      isThrowing ||
+      isShaking ||
+      capturingPokemonId ||
+      showCaughtDialogue ||
+      activeCardId
+    ) {
+      return;
+    }
+
+    setSelectedPokemonId(pokemonId);
+
+    setPokeballActive(true);
+
+    setShowCatchTutorial(false);
+
+    calculateAimPath(pokemonId);
   }
 
   function handlePokeballClick() {
     if (
       !pokeballActive ||
+      !selectedPokemonId ||
       isThrowing ||
-      eeveeCaught ||
-      !eeveeRef.current ||
-      !pokeballRef.current
+      caughtPokemonId
     ) {
       return;
     }
 
-    setShowCatchTutorial(false);
+    const target =
+      pokemonRefs.current[
+        selectedPokemonId
+      ];
 
-    const eeveeRect = eeveeRef.current.getBoundingClientRect();
-    const ballRect = pokeballRef.current.getBoundingClientRect();
+    const ball =
+      pokeballRef.current;
 
-    const eeveeCenterX =
-      eeveeRect.left + eeveeRect.width / 2;
+    if (!target || !ball) {
+      return;
+    }
 
-    const eeveeCenterY =
-      eeveeRect.top + eeveeRect.height / 2;
+    const pokemonRect =
+      target.getBoundingClientRect();
+
+    const ballRect =
+      ball.getBoundingClientRect();
+
+    const pokemonCenterX =
+      pokemonRect.left +
+      pokemonRect.width / 2;
+
+    const pokemonCenterY =
+      pokemonRect.top +
+      pokemonRect.height / 2;
 
     const ballCenterX =
-      ballRect.left + ballRect.width / 2;
+      ballRect.left +
+      ballRect.width / 2;
 
     const ballCenterY =
-      ballRect.top + ballRect.height / 2;
+      ballRect.top +
+      ballRect.height / 2;
 
-    const targetX = eeveeCenterX - ballCenterX;
-    const targetY = eeveeCenterY - ballCenterY;
+    const targetX =
+      pokemonCenterX -
+      ballCenterX;
+
+    const targetY =
+      pokemonCenterY -
+      ballCenterY;
 
     setThrowOffset({
       x: targetX,
       y: targetY
     });
 
+    setAimPath(null);
+
     setPokeballActive(false);
+
     setIsThrowing(true);
 
+    /*
+      Ball reaches selected Pokémon
+    */
+
     setTimeout(() => {
-      setIsCapturing(true);
+      setCapturingPokemonId(
+        selectedPokemonId
+      );
+
+      /*
+        Pokémon shrinks into ball
+      */
 
       setTimeout(() => {
-        setIsCapturing(false);
-        setEeveeCaught(true);
+        setCapturingPokemonId(null);
+
+        setCaughtPokemonId(
+          selectedPokemonId
+        );
 
         setIsThrowing(false);
+
         setIsShaking(true);
+
+        /*
+          Ball shakes three times
+        */
 
         setTimeout(() => {
           setIsShaking(false);
+
           setShowCaughtDialogue(true);
         }, 1700);
       }, 500);
@@ -116,18 +290,28 @@ function App() {
   }
 
   function handleCaughtDialogueClick() {
+    if (!caughtPokemonId) {
+      return;
+    }
+
     setShowCaughtDialogue(false);
-    setShowAboutCard(true);
+
+    setActiveCardId(
+      caughtPokemonId
+    );
   }
 
-  function resetEeveeEncounter() {
-    setShowAboutCard(false);
+  function resetPokemonEncounter() {
+    setActiveCardId(null);
 
-    setEeveeCaught(false);
-    setShowEevee(true);
+    setCaughtPokemonId(null);
 
-    setIsCapturing(false);
+    setCapturingPokemonId(null);
+
+    setSelectedPokemonId(null);
+
     setIsThrowing(false);
+
     setIsShaking(false);
 
     setThrowOffset({
@@ -135,28 +319,47 @@ function App() {
       y: 0
     });
 
-    setPokeballActive(true);
-    setShowCatchTutorial(false);
+    setAimPath(null);
+
+    setPokeballActive(false);
+
+    setShowCatchTutorial(true);
   }
 
   return (
     <main className="game">
       <div
+        ref={worldRef}
         className="world"
-        style={{ backgroundImage: `url(${forest})` }}
+        style={{
+          backgroundImage:
+            `url(${forest})`
+        }}
       >
+        {/* TRAINER */}
+
         <img
           className="trainer"
           src={trainer}
           alt="Trainer"
         />
 
+        {/* INTRO DIALOGUE */}
+
         {showDialogue && (
           <div
             className="dialogue"
-            onClick={handleDialogueClick}
+            onClick={
+              handleDialogueClick
+            }
           >
-            <p>{introDialogue[dialogueIndex]}</p>
+            <p>
+              {
+                introDialogue[
+                  dialogueIndex
+                ]
+              }
+            </p>
 
             <span className="dialogue-continue">
               Click to continue
@@ -167,13 +370,19 @@ function App() {
             </span>
           </div>
         )}
+
+        {/* WILD POKEMON DIALOGUE */}
 
         {showEncounterDialogue && (
           <div
             className="dialogue encounter-dialogue"
-            onClick={handleEncounterClick}
+            onClick={
+              handleEncounterClick
+            }
           >
-            <p>An Eevee appeared!</p>
+            <p>
+              Wild Pokémon appeared!
+            </p>
 
             <span className="dialogue-continue">
               Click to continue
@@ -184,136 +393,289 @@ function App() {
             </span>
           </div>
         )}
+
+        {/* CHOOSE POKEMON INSTRUCTIONS */}
 
         {showCatchTutorial && (
           <div className="catch-tutorial">
             <p className="catch-title">
-              CATCH EEVEE!
+              CHOOSE A POKÉMON!
             </p>
 
             <p className="catch-instructions">
-              Click the Poké Ball
+              Click a Pokémon
               <br />
-              to catch Eevee!
+              to choose what to explore!
             </p>
           </div>
         )}
 
-        {showEevee && !eeveeCaught && (
-          <img
-            ref={eeveeRef}
-            className={`eevee ${
-              !eeveeHasEntered ? "eevee-entering" : ""
-            } ${
-              isCapturing ? "eevee-capturing" : ""
-            }`}
-            src={eevee}
-            alt="Eevee"
-          />
-        )}
+        {/* ALL POKEMON */}
 
-        {showCaughtDialogue && (
-          <div
-            className="dialogue caught-dialogue"
-            onClick={handleCaughtDialogueClick}
-          >
-            <p>Gotcha! Eevee was caught!</p>
+        {showPokemon &&
+          pokemonList.map(
+            (pokemon) => {
+              const isCaught =
+                caughtPokemonId ===
+                pokemon.id;
 
-            <span className="dialogue-continue">
-              Click to continue
-            </span>
+              const isCapturing =
+                capturingPokemonId ===
+                pokemon.id;
 
-            <span className="dialogue-next">
-              ▼
-            </span>
-          </div>
-        )}
+              const isSelected =
+                selectedPokemonId ===
+                pokemon.id;
 
-        {pokeballActive && (
-          <svg
-            className="aim-guide"
-            viewBox="0 0 400 300"
-          >
-            <path
-              d="M 20 275 Q 185 40 360 15"
-              className="aim-path"
-            />
-          </svg>
-        )}
+              if (isCaught) {
+                return null;
+              }
+
+              return (
+                <img
+                  key={
+                    pokemon.id
+                  }
+                  ref={(
+                    element
+                  ) => {
+                    pokemonRefs.current[
+                      pokemon.id
+                    ] = element;
+                  }}
+                  className={`pokemon ${
+                    !pokemonHaveEntered
+                      ? `pokemon-entering-${pokemon.enterFrom}`
+                      : ""
+                  } ${
+                    isCapturing
+                      ? "pokemon-capturing"
+                      : ""
+                  } ${
+                    isSelected
+                      ? "pokemon-selected"
+                      : ""
+                  }`}
+                  src={
+                    pokemon.sprite
+                  }
+                  alt={
+                    pokemon.name
+                  }
+                  onClick={() =>
+                    handlePokemonClick(
+                      pokemon.id
+                    )
+                  }
+                  style={{
+                    left: `${pokemon.x}%`,
+                    top: `${pokemon.y}%`,
+                    width: `${pokemon.width}px`
+                  }}
+                />
+              );
+            }
+          )}
+
+        {/* SELECTED POKEMON LABEL */}
+
+        {selectedPokemon &&
+          pokeballActive && (
+            <div className="selected-label">
+              Selected:{" "}
+              {selectedPokemon.name}
+            </div>
+          )}
+
+        {/* DYNAMIC AIM PATH */}
+
+        {pokeballActive &&
+          selectedPokemon &&
+          aimPath && (
+            <svg
+              className="aim-guide"
+              viewBox={`0 0 ${
+                worldRef.current
+                  ?.clientWidth ??
+                1000
+              } ${
+                worldRef.current
+                  ?.clientHeight ??
+                800
+              }`}
+              preserveAspectRatio="none"
+            >
+              <path
+                d={`
+                  M ${aimPath.startX} ${aimPath.startY}
+                  Q ${
+                    (
+                      aimPath.startX +
+                      aimPath.endX
+                    ) / 2
+                  } ${
+                    Math.min(
+                      aimPath.startY,
+                      aimPath.endY
+                    ) - 120
+                  }
+                  ${aimPath.endX} ${aimPath.endY}
+                `}
+                className="aim-path"
+              />
+            </svg>
+          )}
+
+        {/* POKEBALL */}
 
         <img
           ref={pokeballRef}
           className={`pokeball ${
-            pokeballActive ? "pokeball-active" : ""
-          } ${isThrowing ? "pokeball-throwing" : ""} ${
-            isShaking ? "pokeball-shaking" : ""
-          } ${eeveeCaught ? "pokeball-captured" : ""}`}
+            pokeballActive
+              ? "pokeball-active"
+              : ""
+          } ${
+            isThrowing
+              ? "pokeball-throwing"
+              : ""
+          } ${
+            isShaking
+              ? "pokeball-shaking"
+              : ""
+          } ${
+            caughtPokemonId
+              ? "pokeball-captured"
+              : ""
+          }`}
           src={pokeball}
           alt="Poké Ball"
-          onClick={handlePokeballClick}
+          onClick={
+            handlePokeballClick
+          }
           style={
-            isThrowing || eeveeCaught
+            isThrowing ||
+            caughtPokemonId
               ? ({
-                  "--throw-x": `${throwOffset.x}px`,
-                  "--throw-y": `${throwOffset.y}px`
+                  "--throw-x":
+                    `${throwOffset.x}px`,
+
+                  "--throw-y":
+                    `${throwOffset.y}px`
                 } as React.CSSProperties)
               : undefined
           }
         />
 
-        {showAboutCard && (
+        {/* CAUGHT DIALOGUE */}
+
+        {showCaughtDialogue &&
+          selectedPokemon && (
+            <div
+              className="dialogue caught-dialogue"
+              onClick={
+                handleCaughtDialogueClick
+              }
+            >
+              <p>
+                Gotcha!{" "}
+                {
+                  selectedPokemon.name
+                }{" "}
+                was caught!
+              </p>
+
+              <span className="dialogue-continue">
+                Click to continue
+              </span>
+
+              <span className="dialogue-next">
+                ▼
+              </span>
+            </div>
+          )}
+
+        {/* POKEMON CARD */}
+
+        {activeCardPokemon && (
           <div className="card-overlay">
             <div className="pokemon-card">
               <button
                 className="card-close"
-                onClick={resetEeveeEncounter}
+                onClick={
+                  resetPokemonEncounter
+                }
               >
                 ×
               </button>
 
               <div className="card-header">
                 <span className="card-name">
-                  EEVEE
+                  {activeCardPokemon.name.toUpperCase()}
                 </span>
 
                 <span className="card-hp">
-                  ABOUT ME
+                  {
+                    activeCardPokemon.section
+                  }
                 </span>
               </div>
 
               <div className="card-image-area">
                 <img
-                  src={eevee}
-                  alt="Eevee"
-                  className="card-eevee"
+                  src={
+                    activeCardPokemon.sprite
+                  }
+                  alt={
+                    activeCardPokemon.name
+                  }
+                  className="card-pokemon"
                 />
               </div>
 
               <div className="card-info">
-                <h2>Crystal Chen</h2>
+                <h2>
+                  {
+                    activeCardPokemon.cardTitle
+                  }
+                </h2>
 
                 <p className="card-subtitle">
-                  Computer Science + Business Administration Student
+                  {
+                    activeCardPokemon.cardSubtitle
+                  }
                 </p>
 
                 <p>
-                  Welcome! I'm Crystal, a curious and creative individual who loves learning new things and exploring different fields.
-                  I'm particularly interested in software development, quantitative analysis, and design. I enjoy tackling challenges and finding innovative solutions!
+                  {
+                    activeCardPokemon.description
+                  }
                 </p>
 
                 <div className="card-stats">
-                  <span>Type</span>
+                  <span>
+                    {
+                      activeCardPokemon.statOneLabel
+                    }
+                  </span>
 
                   <strong>
-                    Analytical / Ambitious
+                    {
+                      activeCardPokemon.statOneValue
+                    }
                   </strong>
                 </div>
 
                 <div className="card-stats">
-                  <span>Current Quest</span>
+                  <span>
+                    {
+                      activeCardPokemon.statTwoLabel
+                    }
+                  </span>
 
                   <strong>
-                    Finding the best matcha spot in GTA
+                    {
+                      activeCardPokemon.statTwoValue
+                    }
                   </strong>
                 </div>
               </div>
