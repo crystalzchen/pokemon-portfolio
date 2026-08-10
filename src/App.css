@@ -79,22 +79,18 @@ body {
     filter 0.2s;
 
   user-select: none;
-  touch-action: none;
 }
 
 .pokeball-active {
   opacity: 1;
-  filter: none;
 
-  cursor: grab;
+  filter:
+    brightness(1.15)
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+
+  cursor: pointer;
 
   animation: pokeballReady 0.8s steps(2) infinite;
-}
-
-.pokeball-aiming {
-  cursor: grabbing;
-
-  animation: none;
 }
 
 .pokeball-throwing {
@@ -222,7 +218,7 @@ body {
   position: absolute;
 
   left: 50%;
-  top: 20%;
+  top: 22%;
 
   transform: translateX(-50%);
 
@@ -230,7 +226,6 @@ body {
   color: #222;
 
   border: 4px solid #222;
-  border-radius: 0;
 
   padding: 14px 20px;
 
@@ -291,7 +286,6 @@ body {
 
   font-family: "Press Start 2P", monospace;
   font-size: 7px;
-  font-weight: normal;
 
   opacity: 0.55;
 
@@ -345,6 +339,10 @@ body {
 
   z-index: 6;
 
+  animation: eeveeIdle 1.2s steps(2) infinite;
+}
+
+.eevee-entering {
   animation:
     eeveeEnter 1.2s steps(8) forwards,
     eeveeIdle 1.2s steps(2) 1.2s infinite;
@@ -371,92 +369,6 @@ body {
   }
 }
 
-/* AIM GUIDE */
-
-.aim-guide {
-  position: absolute;
-
-  left: 50%;
-  bottom: 110px;
-
-  width: 400px;
-  height: 300px;
-
-  pointer-events: none;
-
-  overflow: visible;
-
-  z-index: 8;
-}
-
-.aim-path {
-  fill: none;
-
-  stroke: white;
-  stroke-width: 4;
-
-  stroke-dasharray: 5 10;
-
-  opacity: 0.3;
-}
-
-/* CATCH TUTORIAL */
-
-.catch-tutorial {
-  position: absolute;
-
-  left: 50%;
-  top: 15%;
-
-  transform: translateX(-50%);
-
-  text-align: center;
-
-  font-family: "Press Start 2P", monospace;
-
-  color: white;
-
-  z-index: 15;
-
-  user-select: none;
-  pointer-events: none;
-
-  text-shadow:
-    3px 3px 0 #222,
-    -2px -2px 0 #222,
-    2px -2px 0 #222,
-    -2px 2px 0 #222;
-
-  animation: tutorialAppear 0.4s steps(4);
-}
-
-.catch-title {
-  margin: 0 0 14px;
-
-  font-size: 18px;
-}
-
-.catch-instructions {
-  margin: 0;
-
-  font-size: 9px;
-  line-height: 2;
-
-  opacity: 0.9;
-}
-
-@keyframes tutorialAppear {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
 .eevee-capturing {
   transform-origin: center;
 
@@ -471,9 +383,7 @@ body {
 
     opacity: 1;
 
-    filter:
-      brightness(1)
-      drop-shadow(0 0 0 white);
+    filter: brightness(1);
   }
 
   25% {
@@ -522,5 +432,268 @@ body {
     filter:
       brightness(5)
       drop-shadow(0 0 22px white);
+  }
+}
+
+/* CATCH TUTORIAL */
+
+.catch-tutorial {
+  position: absolute;
+
+  left: 50%;
+  top: 15%;
+
+  transform: translateX(-50%);
+
+  text-align: center;
+
+  font-family: "Press Start 2P", monospace;
+
+  color: white;
+
+  z-index: 15;
+
+  pointer-events: none;
+
+  text-shadow:
+    3px 3px 0 #222,
+    -2px -2px 0 #222,
+    2px -2px 0 #222,
+    -2px 2px 0 #222;
+
+  animation: tutorialAppear 0.4s steps(4);
+}
+
+.catch-title {
+  margin: 0 0 14px;
+
+  font-size: 18px;
+}
+
+.catch-instructions {
+  margin: 0;
+
+  font-size: 9px;
+  line-height: 2;
+
+  opacity: 0.9;
+}
+
+@keyframes tutorialAppear {
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+}
+
+/* AIM GUIDE */
+
+.aim-guide {
+  position: absolute;
+
+  left: 50%;
+  bottom: 110px;
+
+  width: 400px;
+  height: 300px;
+
+  pointer-events: none;
+
+  overflow: visible;
+
+  z-index: 8;
+}
+
+.aim-path {
+  fill: none;
+
+  stroke: white;
+  stroke-width: 4;
+
+  stroke-dasharray: 5 10;
+
+  opacity: 0.3;
+}
+
+/* ABOUT ME CARD */
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: 50;
+
+  animation: fadeIn 0.3s steps(4);
+}
+
+.pokemon-card {
+  position: relative;
+
+  width: 340px;
+  min-height: 500px;
+
+  padding: 18px;
+
+  background: #d8a85e;
+
+  border: 8px solid #f1d37a;
+
+  box-shadow:
+    0 0 0 5px #4b3525,
+    12px 12px 0 rgba(0, 0, 0, 0.35);
+
+  font-family: "Press Start 2P", monospace;
+
+  animation: cardPop 0.45s steps(6);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 14px;
+
+  color: #2b2118;
+}
+
+.card-name {
+  font-size: 15px;
+}
+
+.card-hp {
+  font-size: 8px;
+}
+
+.card-image-area {
+  height: 190px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #f4dda0;
+
+  border: 5px solid #4b3525;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+}
+
+.card-eevee {
+  width: 150px;
+
+  image-rendering: pixelated;
+}
+
+.card-info {
+  color: #2b2118;
+}
+
+.card-info h2 {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+}
+
+.card-subtitle {
+  margin-bottom: 18px;
+
+  font-size: 8px;
+  opacity: 0.75;
+}
+
+.card-info p {
+  font-size: 8px;
+  line-height: 1.8;
+}
+
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 14px;
+  padding-top: 10px;
+
+  border-top: 3px solid #4b3525;
+
+  font-size: 7px;
+  line-height: 1.6;
+}
+
+.card-stats strong {
+  text-align: right;
+}
+
+.card-close {
+  position: absolute;
+
+  top: -18px;
+  right: -18px;
+
+  width: 38px;
+  height: 38px;
+
+  border: 4px solid #222;
+
+  background: white;
+  color: #222;
+
+  font-family: "Press Start 2P", monospace;
+  font-size: 16px;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+.card-close:hover {
+  transform: scale(1.1);
+}
+
+@keyframes cardPop {
+  from {
+    transform:
+      scale(0.2)
+      rotateY(90deg);
+
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      scale(1)
+      rotateY(0);
+
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
