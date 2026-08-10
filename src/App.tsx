@@ -33,6 +33,8 @@ function App() {
   const [showCaughtDialogue, setShowCaughtDialogue] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
+  const [isCapturing, setIsCapturing] = useState(false);
+
   const worldRef = useRef<HTMLDivElement>(null);
   const eeveeRef = useRef<HTMLImageElement>(null);
   const pokeballRef = useRef<HTMLImageElement>(null);
@@ -152,16 +154,26 @@ function App() {
     setIsThrowing(true);
 
     setTimeout(() => {
-      setEeveeCaught(true);
-      setPokeballActive(false);
-      setIsThrowing(false);
-      setIsShaking(true);
+  // Poké Ball has reached Eevee
+  setPokeballActive(false);
+  setIsCapturing(true);
 
-      setTimeout(() => {
-        setIsShaking(false);
-        setShowCaughtDialogue(true);
-      }, 1700);
-    }, 700);
+  // Give Eevee time to shrink into the ball
+  setTimeout(() => {
+    setIsCapturing(false);
+    setEeveeCaught(true);
+
+    // Switch from throw animation to shake animation
+    setIsThrowing(false);
+    setIsShaking(true);
+
+    // After three shakes, show the success dialogue
+    setTimeout(() => {
+      setIsShaking(false);
+      setShowCaughtDialogue(true);
+    }, 1700);
+  }, 500);
+}, 700);
   }
 
   return (
@@ -228,7 +240,9 @@ function App() {
         {showEevee && !eeveeCaught && (
           <img
             ref={eeveeRef}
-            className="eevee"
+            className={`eevee ${
+              isCapturing ? "eevee-capturing" : ""
+            }`}
             src={eevee}
             alt="Eevee"
           />
