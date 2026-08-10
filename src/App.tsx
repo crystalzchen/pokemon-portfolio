@@ -17,6 +17,10 @@ function App() {
           alt="Trainer"
         />
 
+        <div className="dialogue">
+          <p>Hi! I'm Crystal!</p>
+        </div>
+
         <img
           className="pokeball"
           src={pokeball}
