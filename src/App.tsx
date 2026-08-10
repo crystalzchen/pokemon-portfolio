@@ -293,29 +293,27 @@ function App() {
                 <h2>Crystal Chen</h2>
 
                 <p className="card-subtitle">
-                  Computer Science + Business
+                  Computer Science + Business Administration Student
                 </p>
 
                 <p>
-                  Hi! I'm Crystal, a student interested in
-                  building creative projects at the
-                  intersection of technology, business,
-                  and design.
+                  Welcome! I'm Crystal, a curious and creative individual who loves learning new things and exploring different fields.
+                  I'm particularly interested in software development, quantitative analysis, and design. I enjoy tackling challenges and finding innovative solutions!
                 </p>
 
                 <div className="card-stats">
                   <span>Type</span>
 
                   <strong>
-                    Creative / Curious
+                    Analytical / Ambitious
                   </strong>
                 </div>
 
                 <div className="card-stats">
-                  <span>Interests</span>
+                  <span>Current Quest</span>
 
                   <strong>
-                    Software • Quant • Design
+                    Finding the best matcha spot in GTA
                   </strong>
                 </div>
               </div>
