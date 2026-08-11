@@ -654,7 +654,7 @@ function App() {
             <div
               className={`pokemon-card ${
                 activeCardPokemon.section ===
-                "ACCOMPLISHMENTS"
+                "ACHIVEMENTS"
                   ? "accomplishments-card"
                   : activeCardPokemon.section ===
                     "EXPERIENCE"
@@ -698,7 +698,7 @@ function App() {
               </div>
 
               {activeCardPokemon.section ===
-              "ACCOMPLISHMENTS" ? (
+              "ACHIEVEMENTS" ? (
                 <div className="accomplishments-section">
                   <h2>
                     {
