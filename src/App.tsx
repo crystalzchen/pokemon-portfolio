@@ -448,7 +448,7 @@ function App() {
         {showCatchTutorial && (
           <div className="catch-tutorial">
             <p className="catch-title">
-              CHOOSE A POKÉMON!
+              CHOOSE A POKEMON!
             </p>
 
             <p className="catch-instructions">
