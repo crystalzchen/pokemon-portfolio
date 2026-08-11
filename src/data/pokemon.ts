@@ -171,7 +171,7 @@ export const pokemonList: PokemonData[] = [
   {
     id: "snorlax",
     name: "Snorlax",
-    section: "ACCOMPLISHMENTS",
+    section: "ACHIEVEMENTS",
 
     sprite: snorlax,
 
@@ -181,7 +181,7 @@ export const pokemonList: PokemonData[] = [
 
     enterFrom: "top",
 
-    cardTitle: "Accomplishments",
+    cardTitle: "Achievements",
 
     cardSubtitle:
       "Awards, competitions, certificates, and milestones",
