@@ -114,7 +114,7 @@ export const pokemonList: PokemonData[] = [
 
     sprite: charizard,
 
-    x: 58,
+    x: 67,
     y: 18,
     width: 125,
 

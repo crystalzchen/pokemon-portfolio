@@ -188,13 +188,17 @@ function App() {
       return;
     }
 
-    setSelectedPokemonId(pokemonId);
+    setSelectedPokemonId(
+      pokemonId
+    );
 
     setPokeballActive(true);
 
     setShowCatchTutorial(false);
 
-    calculateAimPath(pokemonId);
+    calculateAimPath(
+      pokemonId
+    );
   }
 
   function handlePokeballClick() {
@@ -445,47 +449,55 @@ function App() {
               }
 
               return (
-                <img
-                  key={
-                    pokemon.id
-                  }
-                  ref={(
-                    element
-                  ) => {
-                    pokemonRefs.current[
-                      pokemon.id
-                    ] = element;
-                  }}
-                  className={`pokemon ${
+                <div
+                  key={pokemon.id}
+                  className={`pokemon-wrapper ${
                     !pokemonHaveEntered
-                      ? `pokemon-entering-${pokemon.enterFrom}`
-                      : ""
-                  } ${
-                    isCapturing
-                      ? "pokemon-capturing"
-                      : ""
-                  } ${
-                    isSelected
-                      ? "pokemon-selected"
+                      ? `pokemon-wrapper-entering-${pokemon.enterFrom}`
                       : ""
                   }`}
-                  src={
-                    pokemon.sprite
-                  }
-                  alt={
-                    pokemon.name
-                  }
-                  onClick={() =>
-                    handlePokemonClick(
-                      pokemon.id
-                    )
-                  }
                   style={{
                     left: `${pokemon.x}%`,
-                    top: `${pokemon.y}%`,
-                    width: `${pokemon.width}px`
+                    top: `${pokemon.y}%`
                   }}
-                />
+                >
+                  <div className="pokemon-label">
+                    {pokemon.section}
+                  </div>
+
+                  <img
+                    ref={(
+                      element
+                    ) => {
+                      pokemonRefs.current[
+                        pokemon.id
+                      ] = element;
+                    }}
+                    className={`pokemon ${
+                      isCapturing
+                        ? "pokemon-capturing"
+                        : ""
+                    } ${
+                      isSelected
+                        ? "pokemon-selected"
+                        : ""
+                    }`}
+                    src={
+                      pokemon.sprite
+                    }
+                    alt={
+                      pokemon.name
+                    }
+                    onClick={() =>
+                      handlePokemonClick(
+                        pokemon.id
+                      )
+                    }
+                    style={{
+                      width: `${pokemon.width}px`
+                    }}
+                  />
+                </div>
               );
             }
           )}
