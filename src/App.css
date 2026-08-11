@@ -1343,3 +1343,272 @@ body {
     opacity: 1;
   }
 }
+
+/* =========================
+   START SCREEN
+========================= */
+
+.start-screen {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #242424 0%,
+      #111 55%,
+      #050505 100%
+    );
+
+  z-index: 1000;
+
+  overflow: hidden;
+}
+
+/* START POKEBALL */
+
+.start-pokeball {
+  position: relative;
+
+  width: 170px;
+  height: 170px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 3;
+
+  animation:
+    startBallFloat
+    1.2s
+    steps(2)
+    infinite;
+}
+
+.start-pokeball img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+
+  filter:
+    drop-shadow(
+      0 0 14px
+      rgba(
+        255,
+        255,
+        255,
+        0.35
+      )
+    );
+}
+
+.start-pokeball:hover img {
+  filter:
+    brightness(1.15)
+    drop-shadow(
+      0 0 22px
+      rgba(
+        255,
+        255,
+        255,
+        0.8
+      )
+    );
+}
+
+@keyframes startBallFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-8px);
+  }
+}
+
+/* CLICK TO START */
+
+.start-instruction {
+  margin-top: 28px;
+
+  font-family:
+    "Press Start 2P",
+    monospace;
+
+  font-size: 10px;
+
+  line-height: 2;
+
+  color: white;
+
+  text-align: center;
+
+  text-shadow:
+    3px 3px 0 #000;
+
+  animation:
+    startTextBlink
+    1.2s
+    steps(2)
+    infinite;
+}
+
+.start-instruction span {
+  display: block;
+}
+
+@keyframes startTextBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* POKEBALL OPEN ANIMATION */
+
+.start-pokeball-opening {
+  pointer-events: none;
+
+  animation:
+    startBallOpen
+    0.85s
+    steps(8)
+    forwards;
+}
+
+@keyframes startBallOpen {
+  0% {
+    transform:
+      scale(1)
+      rotate(0deg);
+
+    opacity: 1;
+  }
+
+  20% {
+    transform:
+      scale(1.08)
+      rotate(-12deg);
+  }
+
+  40% {
+    transform:
+      scale(1.08)
+      rotate(12deg);
+  }
+
+  60% {
+    transform:
+      scale(1.18)
+      rotate(-8deg);
+
+    filter:
+      brightness(1.8);
+  }
+
+  80% {
+    transform:
+      scale(1.4)
+      rotate(8deg);
+
+    filter:
+      brightness(4);
+  }
+
+  100% {
+    transform:
+      scale(1.8)
+      rotate(0deg);
+
+    filter:
+      brightness(8);
+
+    opacity: 0;
+  }
+}
+
+/* WHITE FLASH */
+
+.start-flash {
+  position: absolute;
+
+  inset: 0;
+
+  background: white;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  animation:
+    startFlash
+    1.1s
+    steps(8)
+    forwards;
+}
+
+@keyframes startFlash {
+  0% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  68% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* START SCREEN FADES AWAY */
+
+.start-screen-opening {
+  animation:
+    startScreenFade
+    1.1s
+    forwards;
+}
+
+@keyframes startScreenFade {
+  0%,
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

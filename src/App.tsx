@@ -23,10 +23,20 @@ interface AimPath {
 }
 
 function App() {
-  const [dialogueIndex, setDialogueIndex] = useState(0);
-  const [showDialogue, setShowDialogue] = useState(true);
+  const [showStartScreen, setShowStartScreen] =
+    useState(true);
 
-  const [showPokemon, setShowPokemon] = useState(false);
+  const [isStarting, setIsStarting] =
+    useState(false);
+
+  const [dialogueIndex, setDialogueIndex] =
+    useState(0);
+
+  const [showDialogue, setShowDialogue] =
+    useState(false);
+
+  const [showPokemon, setShowPokemon] =
+    useState(false);
 
   const [showEncounterDialogue, setShowEncounterDialogue] =
     useState(false);
@@ -99,26 +109,45 @@ function App() {
       experienceIndex
     ] ?? null;
 
+  function handleStartGame() {
+    if (isStarting) {
+      return;
+    }
+
+    setIsStarting(true);
+
+    setTimeout(() => {
+      setShowStartScreen(false);
+      setShowDialogue(true);
+    }, 1100);
+  }
+
   function handleDialogueClick() {
     if (
       dialogueIndex <
       introDialogue.length - 1
     ) {
-      setDialogueIndex(dialogueIndex + 1);
+      setDialogueIndex(
+        dialogueIndex + 1
+      );
+
       return;
     }
 
     setShowDialogue(false);
+
     setShowPokemon(true);
 
     setTimeout(() => {
       setShowEncounterDialogue(true);
+
       setPokemonHaveEntered(true);
     }, 1200);
   }
 
   function handleEncounterClick() {
     setShowEncounterDialogue(false);
+
     setShowCatchTutorial(true);
   }
 
@@ -360,7 +389,8 @@ function App() {
         ref={worldRef}
         className="world"
         style={{
-          backgroundImage: `url(${forest})`
+          backgroundImage:
+            `url(${forest})`
         }}
       >
         <img
@@ -585,6 +615,7 @@ function App() {
               ? ({
                   "--throw-x":
                     `${throwOffset.x}px`,
+
                   "--throw-y":
                     `${throwOffset.y}px`
                 } as React.CSSProperties)
@@ -923,6 +954,49 @@ function App() {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* START SCREEN */}
+
+        {showStartScreen && (
+          <div
+            className={`start-screen ${
+              isStarting
+                ? "start-screen-opening"
+                : ""
+            }`}
+          >
+            <button
+              className={`start-pokeball ${
+                isStarting
+                  ? "start-pokeball-opening"
+                  : ""
+              }`}
+              onClick={
+                handleStartGame
+              }
+              aria-label="Enter portfolio"
+            >
+              <img
+                src={pokeball}
+                alt=""
+              />
+            </button>
+
+            {!isStarting && (
+              <div className="start-instruction">
+                CLICK THE POKE BALL
+
+                <span>
+                  TO START
+                </span>
+              </div>
+            )}
+
+            {isStarting && (
+              <div className="start-flash" />
+            )}
           </div>
         )}
       </div>
