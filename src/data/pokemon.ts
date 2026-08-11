@@ -213,7 +213,7 @@ export const pokemonList: PokemonData[] = [
   },
 
   {
-    title: "President's Entrance Scholarship",
+    title: "President's Gold Entrance Scholarship",
     result: "$4,000",
     organization: "Wilfrid Laurier University",
     year: "2025",
