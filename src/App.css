@@ -36,7 +36,9 @@ body {
   overflow: hidden;
 }
 
-/* TRAINER */
+/* =========================
+   TRAINER
+========================= */
 
 .trainer {
   position: absolute;
@@ -66,7 +68,8 @@ body {
   flex-direction: column;
   align-items: center;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   z-index: 6;
 }
@@ -74,10 +77,16 @@ body {
 .pokemon-label {
   margin-bottom: 10px;
 
-  padding: 6px 8px;
+  padding:
+    6px 8px;
 
   background:
-    rgba(255, 255, 255, 0.9);
+    rgba(
+      255,
+      255,
+      255,
+      0.9
+    );
 
   border:
     3px solid #222;
@@ -96,12 +105,17 @@ body {
 
   box-shadow:
     3px 3px 0
-    rgba(0, 0, 0, 0.25);
+      rgba(
+        0,
+        0,
+        0,
+        0.25
+      );
 
   pointer-events: none;
 }
 
-/* WRAPPER ENTRANCES */
+/* ENTRANCE RIGHT */
 
 .pokemon-wrapper-entering-right {
   animation:
@@ -123,6 +137,8 @@ body {
   }
 }
 
+/* ENTRANCE LEFT */
+
 .pokemon-wrapper-entering-left {
   animation:
     pokemonWrapperEnterLeft
@@ -142,6 +158,8 @@ body {
       translateX(-50%);
   }
 }
+
+/* ENTRANCE TOP */
 
 .pokemon-wrapper-entering-top {
   animation:
@@ -164,6 +182,8 @@ body {
       translateY(0);
   }
 }
+
+/* ENTRANCE BOTTOM */
 
 .pokemon-wrapper-entering-bottom {
   animation:
@@ -223,7 +243,12 @@ body {
     brightness(1.1)
     drop-shadow(
       0 0 8px
-      rgba(255, 255, 255, 0.8)
+      rgba(
+        255,
+        255,
+        255,
+        0.8
+      )
     );
 }
 
@@ -306,7 +331,9 @@ body {
   }
 }
 
-/* POKEBALL */
+/* =========================
+   POKEBALL
+========================= */
 
 .pokeball {
   position: absolute;
@@ -343,7 +370,12 @@ body {
     brightness(1.15)
     drop-shadow(
       0 0 10px
-      rgba(255, 255, 255, 0.9)
+      rgba(
+        255,
+        255,
+        255,
+        0.9
+      )
     );
 
   cursor: pointer;
@@ -491,13 +523,15 @@ body {
   }
 }
 
-/* DIALOGUE */
+/* =========================
+   DIALOGUE
+========================= */
 
 .dialogue {
   position: absolute;
 
   left: 50%;
-  top: 22%;
+  top: 27%;
 
   transform:
     translateX(-50%);
@@ -627,7 +661,9 @@ body {
   }
 }
 
-/* CATCH TUTORIAL */
+/* =========================
+   TUTORIAL
+========================= */
 
 .catch-tutorial {
   position: absolute;
@@ -697,7 +733,9 @@ body {
   }
 }
 
-/* SELECTED MESSAGE */
+/* =========================
+   SELECTED MESSAGE
+========================= */
 
 .selected-label {
   position: absolute;
@@ -746,7 +784,9 @@ body {
   line-height: 1.8;
 }
 
-/* AIM PATH */
+/* =========================
+   AIM PATH
+========================= */
 
 .aim-guide {
   position: absolute;
@@ -776,7 +816,9 @@ body {
   opacity: 0.3;
 }
 
-/* CARD OVERLAY */
+/* =========================
+   CARD OVERLAY
+========================= */
 
 .card-overlay {
   position: absolute;
@@ -804,7 +846,9 @@ body {
     steps(4);
 }
 
-/* BASE CARD */
+/* =========================
+   BASE CARD
+========================= */
 
 .pokemon-card {
   position: relative;
@@ -841,7 +885,9 @@ body {
     steps(6);
 }
 
-/* CARD HEADER */
+/* =========================
+   CARD HEADER
+========================= */
 
 .card-header {
   display: flex;
@@ -856,6 +902,8 @@ body {
   padding-right: 48px;
 
   color: #2b2118;
+
+  flex-shrink: 0;
 }
 
 .card-name {
@@ -866,7 +914,9 @@ body {
   font-size: 8px;
 }
 
-/* CARD IMAGE */
+/* =========================
+   CARD IMAGE
+========================= */
 
 .card-image-area {
   height: 190px;
@@ -885,6 +935,8 @@ body {
   margin-bottom: 16px;
 
   overflow: hidden;
+
+  flex-shrink: 0;
 }
 
 .card-pokemon {
@@ -893,10 +945,13 @@ body {
   image-rendering: pixelated;
 }
 
-/* NORMAL INFO */
+/* =========================
+   NORMAL CARD INFO
+========================= */
 
 .card-info {
-  color: #2b2118;
+  color:
+    #2b2118;
 }
 
 .card-info h2 {
@@ -946,30 +1001,54 @@ body {
   text-align: right;
 }
 
-/* ACCOMPLISHMENTS CARD */
+/* =========================
+   ACHIEVEMENTS CARD
+========================= */
 
 .accomplishments-card {
   width: 620px;
 
-  max-height: 88vh;
+  height: 88vh;
+  max-height: 800px;
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 
-  padding-right: 24px;
+  overflow: hidden;
+
+  padding-right: 18px;
 }
 
 .accomplishments-card .card-image-area {
   height: 150px;
+  min-height: 150px;
+
+  flex-shrink: 0;
 }
 
 .accomplishments-card .card-pokemon {
   width: 115px;
 }
 
+/* =========================
+   ACHIEVEMENTS CONTENT
+========================= */
+
 .accomplishments-section {
   color:
     #2b2118;
+
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 12px;
+  padding-bottom: 20px;
+
+  scrollbar-width: thin;
 }
 
 .accomplishments-section h2 {
@@ -1068,7 +1147,36 @@ body {
   margin-top: 10px;
 }
 
-/* EXPERIENCE CARD */
+/* ACHIEVEMENTS SCROLLBAR */
+
+.accomplishments-section::-webkit-scrollbar {
+  width: 10px;
+}
+
+.accomplishments-section::-webkit-scrollbar-track {
+  background:
+    #f4dda0;
+
+  border:
+    2px solid #4b3525;
+}
+
+.accomplishments-section::-webkit-scrollbar-thumb {
+  background:
+    #f1d34f;
+
+  border:
+    2px solid #4b3525;
+}
+
+.accomplishments-section::-webkit-scrollbar-thumb:hover {
+  background:
+    #d8a85e;
+}
+
+/* =========================
+   EXPERIENCE CARD
+========================= */
 
 .experience-card {
   width: 500px;
@@ -1192,6 +1300,8 @@ body {
   line-height: 2;
 }
 
+/* EXPERIENCE NAV */
+
 .experience-controls {
   display: grid;
 
@@ -1280,7 +1390,9 @@ body {
   }
 }
 
-/* CLOSE BUTTON */
+/* =========================
+   CLOSE BUTTON
+========================= */
 
 .card-close {
   position: absolute;
@@ -1314,36 +1426,6 @@ body {
     scale(1.1);
 }
 
-/* CARD ANIMATIONS */
-
-@keyframes cardPop {
-  from {
-    transform:
-      scale(0.2)
-      rotateY(90deg);
-
-    opacity: 0;
-  }
-
-  to {
-    transform:
-      scale(1)
-      rotateY(0);
-
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 /* =========================
    START SCREEN
 ========================= */
@@ -1371,8 +1453,6 @@ body {
 
   overflow: hidden;
 }
-
-/* START POKEBALL */
 
 .start-pokeball {
   position: relative;
@@ -1446,8 +1526,6 @@ body {
   }
 }
 
-/* CLICK TO START */
-
 .start-instruction {
   margin-top: 28px;
 
@@ -1487,8 +1565,6 @@ body {
     opacity: 0.4;
   }
 }
-
-/* POKEBALL OPEN ANIMATION */
 
 .start-pokeball-opening {
   pointer-events: none;
@@ -1551,8 +1627,6 @@ body {
   }
 }
 
-/* WHITE FLASH */
-
 .start-flash {
   position: absolute;
 
@@ -1593,8 +1667,6 @@ body {
   }
 }
 
-/* START SCREEN FADES AWAY */
-
 .start-screen-opening {
   animation:
     startScreenFade
@@ -1610,5 +1682,37 @@ body {
 
   100% {
     opacity: 0;
+  }
+}
+
+/* =========================
+   CARD ANIMATIONS
+========================= */
+
+@keyframes cardPop {
+  from {
+    transform:
+      scale(0.2)
+      rotateY(90deg);
+
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      scale(1)
+      rotateY(0);
+
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

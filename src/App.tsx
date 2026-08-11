@@ -135,19 +135,16 @@ function App() {
     }
 
     setShowDialogue(false);
-
     setShowPokemon(true);
 
     setTimeout(() => {
       setShowEncounterDialogue(true);
-
       setPokemonHaveEntered(true);
     }, 1200);
   }
 
   function handleEncounterClick() {
     setShowEncounterDialogue(false);
-
     setShowCatchTutorial(true);
   }
 
@@ -288,9 +285,7 @@ function App() {
     });
 
     setAimPath(null);
-
     setPokeballActive(false);
-
     setIsThrowing(true);
 
     setTimeout(() => {
@@ -306,12 +301,10 @@ function App() {
         );
 
         setIsThrowing(false);
-
         setIsShaking(true);
 
         setTimeout(() => {
           setIsShaking(false);
-
           setShowCaughtDialogue(true);
         }, 1700);
       }, 500);
@@ -448,7 +441,7 @@ function App() {
         {showCatchTutorial && (
           <div className="catch-tutorial">
             <p className="catch-title">
-              CHOOSE A POKEMON!
+              CHOOSE A POKÉMON!
             </p>
 
             <p className="catch-instructions">
@@ -654,7 +647,7 @@ function App() {
             <div
               className={`pokemon-card ${
                 activeCardPokemon.section ===
-                "ACHIVEMENTS"
+                "ACHIEVEMENTS"
                   ? "accomplishments-card"
                   : activeCardPokemon.section ===
                     "EXPERIENCE"
@@ -956,8 +949,6 @@ function App() {
             </div>
           </div>
         )}
-
-        {/* START SCREEN */}
 
         {showStartScreen && (
           <div
