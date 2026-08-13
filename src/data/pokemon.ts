@@ -211,6 +211,22 @@ export const pokemonList: PokemonData[] = [
     year: "March 2026",
     category: "Case Competition"
   },
+  
+  {
+    title: "Cineplex X Laurier Case Competition",
+    result: "Semifinalist - Top 50 out of 200+ Teams",
+    organization: "Wilfrid Laurier University and Cineplex",
+    year: "November 2025",
+    category: "Case Competition"
+  },
+
+  {
+    title: "BDO X Laurier Case Competition",
+    result: "Semifinalist - Top 50 out of 200+ Teams",
+    organization: "Wilfrid Laurier University and BDO Canada",
+    year: "March 2026",
+    category: "Case Competition"
+  },
 
   {
     title: "President's Gold Entrance Scholarship",
