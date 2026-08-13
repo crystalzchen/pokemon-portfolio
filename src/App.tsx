@@ -400,6 +400,12 @@ function App() {
 
   return (
     <main className="game">
+      <button
+      className="switch-mode-button"
+      onClick={() => setMode(null)}
+      >
+      SWITCH MODE
+    </button>
       <div
         ref={worldRef}
         className="world"
