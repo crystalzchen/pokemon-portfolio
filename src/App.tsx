@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import "./App.css";
+import ModeSelect from "./components/ModeSelect";
 
 import forest from "./assets/background/forest.png";
 import trainer from "./assets/trainer/trainer.png";
@@ -22,7 +23,11 @@ interface AimPath {
   endY: number;
 }
 
+type PortfolioMode = "adventure" | "classic" | null;
+
 function App() {
+  const [mode, setMode] = useState<PortfolioMode>(null);
+
   const [showStartScreen, setShowStartScreen] =
     useState(true);
 
@@ -374,6 +379,23 @@ function App() {
     setPokeballActive(false);
 
     setShowCatchTutorial(true);
+  }
+
+  if (mode === null) {
+    return <ModeSelect onSelect={setMode} />;
+  }
+
+  if (mode === "classic") {
+    return (
+      <main className="classic-placeholder">
+        <button onClick={() => setMode(null)}>
+          BACK
+        </button>
+
+        <h1>Classic Portfolio</h1>
+        <p>We’ll build this version next.</p>
+      </main>
+    );
   }
 
   return (
