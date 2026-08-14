@@ -55,7 +55,7 @@ function ClassicPortfolio({
 
             <p className="construction-text">
               i'm still building this side of my portfolio.
-              check back soon!
+              check back soon! in the meantime, you can explore my work in adventure mode :D
             </p>
           </div>
 
