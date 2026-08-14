@@ -35,13 +35,12 @@ function ClassicPortfolio({
           </p>
 
           <h1>
-            Hi, I'm Crystal.
+            hey, i'm crystal!
           </h1>
 
           <p className="classic-intro">
-            Computer Science + Business student
-            interested in technology, data, and
-            creative problem solving.
+            computer science @ waterloo and business administration @ laurier
+            i'm still building this part, come back soon!
           </p>
         </section>
       </main>
