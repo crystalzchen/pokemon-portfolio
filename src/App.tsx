@@ -8,6 +8,8 @@ import pokeball from "./assets/ui/pokeball.png";
 
 import { pokemonList } from "./data/pokemon";
 
+import ClassicPortfolio from "./components/ClassicPortfolio";
+
 const introDialogue = [
   "Hi! I'm Crystal!",
   "Welcome to my portfolio!",
@@ -387,14 +389,9 @@ function App() {
 
   if (mode === "classic") {
     return (
-      <main className="classic-placeholder">
-        <button onClick={() => setMode(null)}>
-          BACK
-        </button>
-
-        <h1>Classic Portfolio</h1>
-        <p>We’ll build this version next.</p>
-      </main>
+      <ClassicPortfolio
+      onSwitchMode={() => setMode(null)}
+    />
     );
   }
 
